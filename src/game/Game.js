@@ -17,7 +17,7 @@ export class Game {
         this.canvas.width = this.gameWidth;
         this.canvas.height = this.gameHeight;
 
-        this.player = new Player(0, 0, 20, 'blue');
+        this.player = new Player(0, 0, 20, 'blue', this.gameWidth, this.gameHeight);
         this.obstacles = [
             new Obstacle(100, 100, 20, 20),
             new Obstacle(200, 200, 20, 20),
@@ -148,9 +148,9 @@ export class Game {
         document.getElementById('level').innerText = 'Level: ' + this.level;
         this.player.x = 0;
         this.player.y = 0;
-        this.obstacles.push(new Obstacle(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20));
-        this.resources.push(new Resource(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20, 'food', 20));
-        this.resources.push(new Resource(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20, 'water', 10));
+        this.obstacles.push(new Obstacle(this.getRandomDivisibleBy20(this.gameWidth), this.getRandomDivisibleBy20(this.gameHeight), 20, 20));
+        this.resources.push(new Resource(this.getRandomDivisibleBy20(this.gameWidth), this.getRandomDivisibleBy20(this.gameHeight), 20, 20, 'food', 20));
+        this.resources.push(new Resource(this.getRandomDivisibleBy20(this.gameWidth), this.getRandomDivisibleBy20(this.gameHeight), 20, 20, 'water', 10));
     }
 
     useResource(resourceType) {
