@@ -65,9 +65,6 @@ export class Game {
         this.checkCollections();
         this.checkResourceCollections();
         this.checkEnemyCollisions();
-        if (this.resources.length === 0) {
-            this.nextLevel();
-        }
         this.draw();
     }
 
@@ -133,6 +130,11 @@ export class Game {
                 this.inventory.displayInventory();
             }
         });
+
+        // Sicherstellen, dass genug Ressourcen da sind, bevor ein Levelaufstieg erfolgt
+        if (this.resources.length === 0) {
+            this.nextLevel();
+        }
     }
 
     checkEnemyCollisions() {
@@ -148,9 +150,9 @@ export class Game {
         document.getElementById('level').innerText = 'Level: ' + this.level;
         this.player.x = 0;
         this.player.y = 0;
-        this.obstacles.push(new Obstacle(this.getRandomDivisibleBy20(this.gameWidth), this.getRandomDivisibleBy20(this.gameHeight), 20, 20));
-        this.resources.push(new Resource(this.getRandomDivisibleBy20(this.gameWidth), this.getRandomDivisibleBy20(this.gameHeight), 20, 20, 'food', 20));
-        this.resources.push(new Resource(this.getRandomDivisibleBy20(this.gameWidth), this.getRandomDivisibleBy20(this.gameHeight), 20, 20, 'water', 10));
+        this.obstacles.push(new Obstacle(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20));
+        this.resources.push(new Resource(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20, 'food', 20));
+        this.resources.push(new Resource(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20, 'water', 10));
     }
 
     useResource(resourceType) {
