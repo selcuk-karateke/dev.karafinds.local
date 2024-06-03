@@ -128,12 +128,9 @@ export class Game {
     checkResourceCollections() {
         this.resources.forEach((resource, index) => {
             if (this.player.detectCollision(resource)) {
-                if (resource.type === 'food') {
-                    this.player.regenerateEnergy(20);
-                } else if (resource.type === 'water') {
-                    this.player.regenerateEnergy(10);
-                }
+                this.inventory.addItem(resource);
                 this.resources.splice(index, 1); // Entferne die gesammelte Ressource
+                this.inventory.displayInventory();
             }
         });
     }
@@ -151,19 +148,17 @@ export class Game {
         document.getElementById('level').innerText = 'Level: ' + this.level;
         this.player.x = 0;
         this.player.y = 0;
-        this.obstacles.push(new Obstacle(this.getRandomDivisibleBy20(this.gameWidth), this.getRandomDivisibleBy20(this.gameHeight), 20, 20));
-        this.resources.push(new Resource(this.getRandomDivisibleBy20(this.gameWidth), this.getRandomDivisibleBy20(this.gameHeight), 20, 20, 'food', 20));
-        this.resources.push(new Resource(this.getRandomDivisibleBy20(this.gameWidth), this.getRandomDivisibleBy20(this.gameHeight), 20, 20, 'water', 10));
+        this.obstacles.push(new Obstacle(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20));
+        this.resources.push(new Resource(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20, 'food', 20));
+        this.resources.push(new Resource(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20, 'water', 10));
     }
 
-    getRandomDivisibleBy20(number) {
-        let maxDivisible = Math.floor(number / 20);
-        return Math.floor(Math.random() * (maxDivisible + 1)) * 20;
+    useResource(resourceType) {
+        const resource = this.inventory.items.find(item => item.type === resourceType);
+        if (resource) {
+            this.player.regenerateEnergy(resource.energy);
+            this.inventory.removeItem(resource);
+            this.inventory.displayInventory();
+        }
     }
 }
-
-const game = new Game();
-
-// Event listener for using resources
-document.getElementById('use-food').addEventListener('click', () => game.useResource('food'));
-document.getElementById('use-water').addEventListener('click', () => game.useResource('water'));
