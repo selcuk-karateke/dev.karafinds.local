@@ -47,25 +47,26 @@ export class Game {
 
     handleKeydown(event) {
         const step = 20;
-        switch (event.key) {
-            case 'ArrowUp':
-                this.player.move(0, -step, 5);
-                break;
-            case 'ArrowDown':
-                this.player.move(0, step, 5);
-                break;
-            case 'ArrowLeft':
-                this.player.move(-step, 0, 5);
-                break;
-            case 'ArrowRight':
-                this.player.move(step, 0, 5);
-                break;
-        }
+        const moveKeys = {
+            'w': [0, -step],
+            's': [0, step],
+            'a': [-step, 0],
+            'd': [step, 0],
+            'ArrowUp': [0, -step],
+            'ArrowDown': [0, step],
+            'ArrowLeft': [-step, 0],
+            'ArrowRight': [step, 0]
+        };
+
+        if (moveKeys[event.key]) {
+            this.player.move(...moveKeys[event.key], 5);
+                event.preventDefault();
         this.checkCollisions();
         this.checkCollections();
         this.checkResourceCollections();
         this.checkEnemyCollisions();
         this.draw();
+        }
     }
 
     updateEnergy() {
@@ -148,8 +149,8 @@ export class Game {
     nextLevel() {
         this.level += 1;
         document.getElementById('level').innerText = 'Level: ' + this.level;
-        this.player.x = 0;
-        this.player.y = 0;
+        // this.player.x = 0;
+        // this.player.y = 0;
         this.obstacles.push(new Obstacle(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20));
         this.resources.push(new Resource(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20, 'food', 20));
         this.resources.push(new Resource(getRandomDivisibleBy20(this.gameWidth), getRandomDivisibleBy20(this.gameHeight), 20, 20, 'water', 10));

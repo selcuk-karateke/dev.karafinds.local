@@ -1,6 +1,10 @@
 <?php
 session_start();
-$score = $_POST['score'];
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['score'])) {
+        $score = intval($_POST['score']);
+        $_SESSION['score'] = $score;
 
 $mysqli = new mysqli('localhost', 'root', '', 'game_db');
 
@@ -13,7 +17,9 @@ $stmt->bind_param('i', $score);
 $stmt->execute();
 $stmt->close();
 $mysqli->close();
+    }
+}
 
-$_SESSION['score'] = 0;
 header('Location: game.php');
+exit();
 ?>

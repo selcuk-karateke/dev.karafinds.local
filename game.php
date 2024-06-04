@@ -44,7 +44,7 @@ include 'parts/head.php';
                     <button id="use-food" class="btn btn-warning mb-2">Nahrung verwenden</button>
                     <button id="use-water" class="btn btn-primary mb-2">Wasser verwenden</button>
                     <form method="post" action="save_score.php" class="mb-3">
-                        <input type="hidden" name="score" value="<?php echo $_SESSION['score']; ?>">
+                        <input type="hidden" name="score" id="score-input" value="">
                         <button type="submit" class="btn btn-primary">Score speichern</button>
                     </form>
                     <div id="highscores" class="mb-3">
@@ -77,5 +77,11 @@ include 'parts/head.php';
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="game.js"></script>
+    <script>
+        // Update the hidden score input before submitting the form
+        document.querySelector('form').addEventListener('submit', function() {
+            document.getElementById('score-input').value = game.player.score;
+        });
+    </script>
 </body>
 </html>
