@@ -2,7 +2,7 @@ import { GameObject } from './GameObject.js';
 
 export class Enemy extends GameObject {
     constructor(x, y, width, height, color = 'black') {
-        super(x, y, width, height, color);
+        super(x, y, null, width, height, color);
         this.health = 100;
     }
 

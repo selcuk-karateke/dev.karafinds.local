@@ -26,20 +26,28 @@ $additional_head_content = '<link rel="stylesheet" href="game.css">';
 include 'parts/head.php';
 ?>
 
-<body>
-    <div class="container">
+<body class="bg-dark text-white">
+    <div class="container mt-3">
         <header class="my-4">
             <h1 class="text-center">Einfaches 2D-Spiel - Webdesign Karateke</h1>
             <?php include 'parts/nav.htm'; ?>
         </header>
         <section>
             <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div id="energy" class="hud-item alert alert-info">Energie: <span id="energy-value">100%</span></div>
+                        <div id="level" class="hud-item alert alert-success">Level: <span id="level-value">1</span></div>
+                        <div id="score" class="hud-item alert alert-warning">Score: <span id="score-value"><?php echo $_SESSION['score']; ?></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-4">
-                    <div id="energy" class="mb-3">Energie: 100</div>
-                    <div id="level" class="mb-3">Level: 1</div>
-                    <div id="score" class="mb-3">Score: <?php echo $_SESSION['score']; ?></div>
-                    <div id="inventory" class="mb-3">
-                        <h4>Inventar</h4>
+                    <button id="cheat-energy" class="btn btn-warning mb-2">Energie auffüllen</button>
+                    <button onclick="toggleDarkMode()" class="btn btn-warning mb-2">Modus wechseln</button>
+                    <div id="inventory" class="hud-item alert alert-dark">
+                        Inventar: <span id="inventory-items">Keine Gegenstände</span>
                     </div>
                     <button id="use-food" class="btn btn-warning mb-2">Nahrung verwenden</button>
                     <button id="use-water" class="btn btn-primary mb-2">Wasser verwenden</button>
@@ -55,7 +63,7 @@ include 'parts/head.php';
                             <?php endforeach; ?>
                         </ul>
                     </div>
-                    <div id="quests" class="mb-3">
+                    <div id="quests" class="mt-3">
                         <h4>Quests</h4>
                         <ul class="list-group">
                             <li class="list-group-item">Sammle 5 Nahrung</li>
@@ -82,6 +90,12 @@ include 'parts/head.php';
         document.querySelector('form').addEventListener('submit', function() {
             document.getElementById('score-input').value = game.player.score;
         });
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('bg-dark');
+            document.body.classList.toggle('text-white');
+        }
     </script>
 </body>
+
 </html>
