@@ -32,6 +32,7 @@ include 'parts/head.php';
         <header class="my-4">
             <h1 class="text-center">Einfaches 2D-Spiel - Webdesign Karateke</h1>
             <?php include 'parts/nav.htm'; ?>
+            <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1070;"></div>
         </header>
         <section>
             <div class="row">
@@ -53,27 +54,22 @@ include 'parts/head.php';
                                     <!-- Hier deine Einstellungsoptionen einfügen -->
                                     <form>
                                         <div class="mb-3">
-                                            <label for="setting-theme-1" class="form-label">Themes</label>
-                                            <select class="form-select" id="setting-theme-1">
-                                                <option selected>Wähle ein Theme</option>
+                                            <label for="setting-theme" class="form-label">Themes</label>
+                                            <select class="form-select" id="setting-theme" data-setting="theme">
                                                 <option value="light">Light</option>
                                                 <option value="dark">Dark</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
                                             <label for="setting-notification" class="form-label">Notifications</label>
-                                            <select class="form-select" id="setting-notification">
-                                                <option selected>Benachrichtigung aktivieren</option>
-                                                <option value="0" disabled>Ja</option>
-                                                <option value="1" disabled>Nein</option>
-                                            </select>
+                                            <input type="checkbox" class="form-check-input" id="setting-notifications" data-setting="notifications">
                                         </div>
                                     </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
                                     <!-- Button im Modal für das Speichern der Einstellungen -->
-                                    <button type="button" class="btn btn-primary" onclick="saveSettings()" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" title="Änderungen speichern"><i class="fas fa-save"></i></button>
+                                    <!-- <button type="button" class="btn btn-primary" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-placement="top" title="Änderungen speichern"><i class="fas fa-save"></i></button> -->
                                 </div>
                             </div>
                         </div>
