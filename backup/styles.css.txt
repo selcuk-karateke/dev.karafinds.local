@@ -5,11 +5,15 @@ body {
 }
 
 .container {
-    min-height: 960px;
-    width     : 80%;
-    margin    : 20px auto;
-    padding   : 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display              : grid;
+    grid-template-columns: 1fr 3fr;
+    /* Anpassung für kleinere Bildschirme */
+    gap                  : 20px;
+    min-height           : 960px;
+    width                : 80%;
+    margin               : 20px auto;
+    padding              : 20px;
+    box-shadow           : 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {}
@@ -32,10 +36,11 @@ section h2 {}
 
 
 .stroked-text {
-    -webkit-text-stroke: 3px #212529;
+    -webkit-text-stroke    : 3px #212529;
     -webkit-text-fill-color: white;
-    paint-order: stroke;
+    paint-order            : stroke;
 }
+
 footer {
     text-align: center;
     padding   : 10px;
@@ -46,7 +51,6 @@ footer {
 
 /* Button styles */
 .btn {
-    min-width: 50px;
     padding   : 8px 16px;
     border    : none;
     cursor    : pointer;
@@ -60,16 +64,6 @@ footer {
     color           : white;
     padding         : 10px;
     border-radius   : 5px;
-}
-
-.hud-item {
-    padding    : 10px;
-    margin     : 5px 0;
-    margin-right: 20px;
-    min-width: 150px;
-    text-align: center;
-    font-size  : 1.2rem;
-    font-weight: bold;
 }
 
 .game-area {

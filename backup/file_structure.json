@@ -1,0 +1,30 @@
+{
+    "functions.php": "file",
+    "game.css": "file",
+    "game.js": "file",
+    "game.php": "file",
+    "index.php": "file",
+    "instagram.php": "file",
+    "parts": {
+        "head.php": "file",
+        "nav.htm": "file"
+    },
+    "policies.php": "file",
+    "save_score.php": "file",
+    "src": {
+        "game": {
+            "Collectible.js": "file",
+            "Enemy.js": "file",
+            "Game.js": "file",
+            "GameObject.js": "file",
+            "Inventory.js": "file",
+            "Obstacle.js": "file",
+            "Player.js": "file",
+            "Resource.js": "file"
+        },
+        "utils": {
+            "utils.js": "file"
+        }
+    },
+    "styles.css": "file"
+}
