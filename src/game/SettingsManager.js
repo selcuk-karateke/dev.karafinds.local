@@ -5,19 +5,33 @@ export class SettingsManager {
     this.settings = this.loadSettings();
     this.init();
     this.applySettingsToForm();
+    this.applyTheme(); // Stelle sicher, dass das gespeicherte Theme angewandt wird
   }
 
   init() {
-    // Horche auf Änderungen in jedem Select-Element, das eine 'data-setting' Attribut besitzt
-    document.querySelectorAll("[data-setting]").forEach((select) => {
-      select.addEventListener("change", (event) => {
+    // Event-Listener für alle Elemente mit "data-setting" Attribut
+    document.querySelectorAll("[data-setting]").forEach((element) => {
+      element.addEventListener("change", (event) => {
         const key = event.target.getAttribute("data-setting");
-        const value = event.target.value;
+        let value = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
+        console.log(`Setting ${key} changed to ${value}`); // Prüfe den tatsächlichen Wert
         this.updateSetting(key, value);
         this.saveSettings();
       });
     });
+
+    // EventListener für den Theme-Wechsel-Button
+    this.setupThemeChangeListener();
     this.toastManager = new ToastManager();
+  }
+
+  setupThemeChangeListener() {
+    const themeButton = document.getElementById("change-theme");
+    if (themeButton) {
+      themeButton.addEventListener("click", () => {
+        this.toggleTheme();
+      });
+    }
   }
 
   loadSettings() {
@@ -49,7 +63,7 @@ export class SettingsManager {
     // Standardwerte für die Einstellungen
     return {
       theme: "dark",
-      notifications: true,
+      notifications: true, // Achte darauf, dass dieser Wert korrekt als Boolean initialisiert wird
       fontSize: "medium",
     };
   }
@@ -72,14 +86,43 @@ export class SettingsManager {
   }
 
   updateSetting(key, value) {
-    // Konvertiere Wert zu einem geeigneten Typ, falls nötig
-    if (typeof this.settings[key] === "boolean") {
-      value = value === "true";
-    }
+    // // Konvertiere Wert zu einem geeigneten Typ, falls nötig
+    // if (typeof this.settings[key] === "boolean") {
+    //   value = value === "true";
+    // }
     // Aktualisiere eine spezifische Einstellung
     if (key in this.settings) {
       this.settings[key] = value;
       this.reflectChangesInUI(key, value);
+      if (key === "theme") {
+        this.applyTheme();
+      }
+    }
+  }
+  toggleTheme() {
+    const currentTheme = this.getSetting("theme");
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    this.updateSetting("theme", newTheme);
+    this.saveSettings();
+    this.applyTheme();
+  }
+
+  applyTheme() {
+    const theme = this.getSetting("theme");
+    document.body.classList.toggle("bg-dark", theme === "dark");
+    document.body.classList.toggle("text-white", theme === "dark");
+    document.querySelectorAll(".modal-content").forEach((modal) => {
+      modal.classList.toggle("bg-dark", theme === "dark");
+      modal.classList.toggle("text-white", theme === "dark");
+    });
+
+    const themeButtonIcon = document
+      .getElementById("change-theme")
+      .querySelector("i");
+    if (theme === "dark") {
+      themeButtonIcon.className = "fas fa-moon"; // Beispiel für ein Mond-Icon
+    } else {
+      themeButtonIcon.className = "fas fa-sun"; // Beispiel für ein Sonnen-Icon
     }
   }
   reflectChangesInUI(key, value) {

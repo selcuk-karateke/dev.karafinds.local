@@ -89,7 +89,7 @@ include 'parts/head.php';
             <div class="row">
                 <div class="col-md-4">
                     <button id="cheat-energy" class="btn btn-warning mb-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Energie auffüllen"><i class="fas fa-bolt"></i></button>
-                    <button onclick="toggleDarkMode()" class="btn btn-warning mb-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Modus wechseln"><i class="fas fa-cloud-sun"></i>
+                    <button id="change-theme" class="btn btn-warning mb-2" data-bs-toggle="tooltip" data-bs-placement="top" title="Modus wechseln"><i class="fas fa-cloud-sun"></i>
                     </button>
                     <div id="inventory" class="hud-item">
                         Inventar: <span id="inventory-items">Keine Gegenstände</span>
@@ -141,13 +141,6 @@ include 'parts/head.php';
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
         });
-
-        function toggleDarkMode() {
-            document.body.classList.toggle('bg-dark');
-            document.querySelector('.modal-content').classList.toggle('bg-dark');
-            document.body.classList.toggle('text-white');
-            document.querySelector('.modal-content').classList.toggle('text-white');
-        }
     </script>
 
 </body>
