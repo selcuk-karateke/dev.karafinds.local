@@ -1,4 +1,14 @@
 {
+    "assets": {
+        "images": {
+            "logo.png": "file",
+            "output-onlinepngtools.png": "file"
+        }
+    },
+    "auth": {
+        "login.php": "file"
+    },
+    "bootstrap.php": "file",
     "functions.php": "file",
     "game.css": "file",
     "game.js": "file",
@@ -7,7 +17,7 @@
     "instagram.php": "file",
     "parts": {
         "head.php": "file",
-        "nav.htm": "file"
+        "nav.php": "file"
     },
     "policies.php": "file",
     "save_score.php": "file",
@@ -20,7 +30,9 @@
             "Inventory.js": "file",
             "Obstacle.js": "file",
             "Player.js": "file",
-            "Resource.js": "file"
+            "Resource.js": "file",
+            "SettingsManager.js": "file",
+            "ToastManager.js": "file"
         },
         "utils": {
             "utils.js": "file"

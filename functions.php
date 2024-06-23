@@ -73,3 +73,22 @@ function fetchComments($mediaId, $accessToken)
 
     return $comments;
 }
+
+function login()
+{
+    if ($_POST["username"] == "admin" && $_POST["password"] == "admin123") {
+        $_SESSION["username"] = "admin";
+        $_SESSION["logged"] = "1";
+        header("Location: /");
+    }
+}
+
+function logout()
+{
+    if (isset($_SESSION["username"]) && isset($_SESSION["logged"])) {
+        $_SESSION = null;
+        session_unset();
+        session_destroy();
+        header("Location: /");
+    }
+}

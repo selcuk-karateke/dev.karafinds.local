@@ -1,7 +1,5 @@
 <?php
-session_start();
-require 'config.php';
-require 'functions.php';
+require_once 'bootstrap.php';
 $scope = 'instagram_basic,instagram_manage_comments';
 $oauthUrl = 'https://api.instagram.com/oauth/';
 // URL für die Benutzerauthentifizierung bauen
@@ -39,7 +37,7 @@ include 'parts/head.php';
     <div class="container">
         <header class="my-4">
             <h1 class="text-center">Instagram - Webdesign Karateke</h1>
-            <?php include 'parts/nav.htm'; ?>
+            <?php include 'parts/nav.php'; ?>
         </header>
         <section>
             <div class="row">

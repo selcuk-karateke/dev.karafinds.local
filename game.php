@@ -1,9 +1,9 @@
 <?php
-session_start();
-require 'config.php';
+require_once 'bootstrap.php';
 $title = "Einfaches 2D-Spiel - Webdesign Karateke";
 $meta_description = "Game - Willkommen bei Webdesign Karateke";
 $additional_head_content = '<link rel="stylesheet" href="game.css">';
+
 if (!isset($_SESSION['score'])) {
     $_SESSION['score'] = 0;
 }
@@ -31,7 +31,7 @@ include 'parts/head.php';
     <div class="container">
         <header class="my-4">
             <h1 class="text-center">Einfaches 2D-Spiel - Webdesign Karateke</h1>
-            <?php include 'parts/nav.htm'; ?>
+            <?php include 'parts/nav.php'; ?>
             <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1070;"></div>
         </header>
         <section>

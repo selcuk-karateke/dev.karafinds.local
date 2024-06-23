@@ -86,11 +86,11 @@ export class Player extends GameObject {
   }
 
   drawEnergy() {
-    document.getElementById("energy").innerText = "Energie: " + this.energy;
+    document.getElementById("energy").innerHTML = "<i class='fas fa-bolt'></i> " + this.energy;
   }
 
   drawScore() {
-    document.getElementById("score").innerText = "Score: " + this.score;
+    document.getElementById("score").innerHTML = "<i class='fas fa-trophy'></i> " + this.score;
   }
 
   checkCollision() {

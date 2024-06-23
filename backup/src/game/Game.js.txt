@@ -1,3 +1,4 @@
+import { SettingsManager } from "./SettingsManager.js";
 import { Player } from "./Player.js";
 import { Obstacle } from "./Obstacle.js";
 import { Collectible } from "./Collectible.js";
@@ -41,8 +42,11 @@ export class Game {
     ];
     this.enemies = [new Enemy(400, 400, 20, 20, "black")];
     this.level = 1;
-    this.gameLoop(); // Starte die Spielschleife beim Erstellen des Spielobjekts
+    this.gameLoop();
 
+    // Starte die Spielschleife beim Erstellen des Spielobjekts
+    this.settingsManager = new SettingsManager();
+    
     this.init();
   }
   init() {
@@ -72,6 +76,7 @@ export class Game {
     this.checkResourceCollections();
     // Überprüfe Kollisionen, sammle Ressourcen usw.
   }
+  
   handleCanvasClick(event) {
     const rect = this.canvas.getBoundingClientRect();
     const clickX = event.clientX - rect.left;
@@ -128,15 +133,16 @@ export class Game {
   }
   drawGrid() {
     this.ctx.strokeStyle = "#ddd";
+    let dynamicGridSize = Math.ceil(Math.min(this.gameWidth, this.gameHeight) / 30); // Beispiel einer dynamischen Grid-Berechnung
 
-    for (let x = 0; x <= this.gameWidth; x += this.gridSize) {
+    for (let x = 0; x <= this.gameWidth; x += dynamicGridSize) {
       this.ctx.beginPath();
       this.ctx.moveTo(x, 0);
       this.ctx.lineTo(x, this.gameHeight);
       this.ctx.stroke();
     }
 
-    for (let y = 0; y <= this.gameHeight; y += this.gridSize) {
+    for (let y = 0; y <= this.gameHeight; y += dynamicGridSize) {
       this.ctx.beginPath();
       this.ctx.moveTo(0, y);
       this.ctx.lineTo(this.gameWidth, y);
@@ -188,7 +194,7 @@ export class Game {
   }
   nextLevel() {
     this.level += 1;
-    document.getElementById("level").innerText = "Level: " + this.level;
+    document.getElementById("level").innerHTML = "<i class='fas fa-medal'></i> " + this.level;
     // this.player.x = 0;
     // this.player.y = 0;
     this.obstacles.push(
