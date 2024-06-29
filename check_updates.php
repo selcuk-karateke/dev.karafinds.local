@@ -1,6 +1,6 @@
 <?php
 require_once 'classes/UpdatesMonitor.php';
-// Download the plugin into your plugins directory
+// Download the wordpress plugin into your plugins directory
 // https://github.com/WP-API/Basic-Auth
 
 // URL aus den GET-Parametern holen
