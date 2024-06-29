@@ -144,32 +144,40 @@ if ($userLogged) {
                                     <div class="card mb-4">
                                         <div class="card-header">
                                             <i class="fas fa-globe"></i> <?php echo htmlspecialchars($website['name']); ?>
+                                            <span class="float-end" id="availability-status-header-<?php echo md5($website['url']); ?>">
+                                                <i class="fas fa-spinner fa-spin"></i> Lade Verfügbarkeitsdaten...
+                                            </span>
                                         </div>
                                         <div class="card-body">
-                                            <h4>Verfügbarkeit</h4>
-                                            <button class="btn btn-primary" onclick="checkAvailability('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">Verfügbarkeit prüfen</button>
-                                            <ul id="availability-status-<?php echo md5($website['url']); ?>">
+                                            <button class="btn btn-primary" onclick="checkAvailability('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
+                                                <i class="fas fa-globe"></i>
+                                            </button>
+                                            Verfügbarkeit prüfen
+                                            <ul id="availability-status-<?php echo md5($website['url']); ?>" class="mt-2">
                                                 <li>
                                                     <div class="spinner-border text-primary d-none" role="status">
                                                         <span class="visually-hidden">Lade Verfügbarkeitsdaten...</span>
                                                     </div>
                                                 </li>
                                             </ul>
-                                            <h4>Ladezeiten</h4>
-                                            <button class="btn btn-primary" onclick="checkLoadTime('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">Ladezeiten prüfen</button>
-                                            <ul id="loadtime-status-<?php echo md5($website['url']); ?>">
+                                            <button class="btn btn-primary" onclick="checkLoadTime('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
+                                                <i class="fas fa-tachometer-alt"></i>
+                                            </button> Ladezeiten prüfen
+                                            <ul id="loadtime-status-<?php echo md5($website['url']); ?>" class="mt-2">
                                                 <li>
                                                     <div class="spinner-border text-primary d-none" role="status">
                                                         <span class="visually-hidden">Lade Ladezeitdaten...</span>
                                                     </div>
                                                 </li>
                                             </ul>
-                                            <h4>Plugin- und Theme-Updates</h4>
-                                            <button class="btn btn-primary" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['user_api']; ?>', '<?php echo $website['pass_api']; ?>', '<?php echo $website['type']; ?>')">Updates prüfen</button>
-                                            <p id="updates-status-<?php echo md5($website['url']); ?>">Lade Updates...</p>
-                                            <h4>Sicherheitsstatus</h4>
-                                            <button class="btn btn-primary" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')">Sicherheitsstatus prüfen</button>
-                                            <p id="security-status-<?php echo md5($website['url']); ?>">Lade Sicherheitsdaten...</p>
+                                            <button class="btn btn-primary" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['user_api']; ?>', '<?php echo $website['pass_api']; ?>', '<?php echo $website['type']; ?>')">
+                                                <i class="fas fa-sync-alt"></i>
+                                            </button> Updates prüfen
+                                            <p id="updates-status-<?php echo md5($website['url']); ?>" class="mt-2">Lade Updates...</p>
+                                            <button class="btn btn-primary" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')">
+                                                <i class="fas fa-shield-alt"></i>
+                                            </button> Sicherheitsstatus prüfen
+                                            <p id="security-status-<?php echo md5($website['url']); ?>" class="mt-2">Lade Sicherheitsdaten...</p>
                                         </div>
                                     </div>
                                 </div>
@@ -201,17 +209,24 @@ if ($userLogged) {
                 }, function(data) {
                     var results = JSON.parse(data);
                     var statusList = $('#availability-status-' + urlHash);
+                    var statusHeader = $('#availability-status-header-' + urlHash);
                     statusList.empty();
+                    statusHeader.empty();
                     $.each(results, function(url, status) {
                         var icon;
+                        var headerText;
                         if (status.includes("Seite ist erreichbar")) {
                             icon = '<i class="fas fa-check-circle text-success"></i>';
+                            headerText = icon + ' Erreichbar';
                         } else if (status.includes("403")) {
                             icon = '<i class="fas fa-times-circle text-warning"></i>'; // Gelb für Forbidden
+                            headerText = icon + ' Forbidden';
                         } else {
                             icon = '<i class="fas fa-times-circle text-danger"></i>'; // Rot für andere Fehler
+                            headerText = icon + ' Nicht erreichbar';
                         }
-                        statusList.append('<li>' + url + ': ' + icon + ' ' + status + '</li>');
+                        statusList.append('<div>' + url + ': ' + icon + ' ' + status + '</div>');
+                        statusHeader.append(headerText);
                     });
                 });
             }
@@ -233,7 +248,7 @@ if ($userLogged) {
                         } else {
                             icon = '<i class="fas fa-times-circle text-danger"></i>'; // Rot für schlechte Ladezeit
                         }
-                        statusList.append('<li>' + url + ': ' + icon + ' ' + time.toFixed(2) + ' Sekunden</li>');
+                        statusList.append('<div>' + url + ': ' + icon + ' ' + time.toFixed(2) + ' Sekunden</div>');
                     });
                 });
             }
