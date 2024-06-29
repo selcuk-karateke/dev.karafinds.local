@@ -2,7 +2,7 @@
 require_once 'bootstrap.php';
 $title = "Datenschutzrichtlinie - Webdesign Karateke";
 $meta_description = "Policies - Willkommen bei Webdesign Karateke";
-// $additional_head_content = '<link rel="stylesheet" href="policies.css">';
+// $additional_head_content_1 = '<link rel="stylesheet" href="policies.css">';
 include 'parts/head.php';
 ?>
 

@@ -29,7 +29,7 @@ if (isset($_GET['code'])) {
 
 $title = "Dev Instagram - Webdesign Karateke";
 $meta_description = "Instagram - Willkommen bei Webdesign Karateke";
-// $additional_head_content = '<link rel="stylesheet" href="instagram.css">';
+// $additional_head_content_1 = '<link rel="stylesheet" href="instagram.css">';
 include 'parts/head.php';
 ?>
 

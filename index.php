@@ -3,115 +3,134 @@ require_once 'bootstrap.php';
 $title = "Homepage";
 $meta_description = "Willkommen bei Webdesign Karateke";
 // $additional_head_content = '<link rel="stylesheet" href="index.css">';
-$additional_head_content = '<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>';
+$additional_head_content_1 = '';
+$additional_head_content_2 = '<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>';
 include 'parts/head.php';
 
-// Beispiel-Webseiten
+// Webseiten
 $websites = [
     [
+        'name' => 'Karateke Webdesign',
         'url' => 'https://karateke-webdesign.de',
         'host' => 'w015a999.kasserver.com',
         'port' => '22',
         'user' => 'ssh-w01e9880',
         'pass' => PASSWORD_SERVER_1,
         'path' => '/www/htdocs/w015a999/karateke-webdesign.de',
-        'name' => 'Karateke Webdesign',
+        'user_ftp' => '',
+        'pass_ftp' => '',
         'user_api' => 'AdminKarateke',
         'pass_api' => 'WebKara24',
         'type' => 'wordpress'
     ],
     [
+        'name' => 'DEV',
         'url' => 'https://dev.karafinds.com',
         'host' => 'w01bcb0d.kasserver.com',
         'port' => '22',
         'user' => 'ssh-w01bcb0d',
         'pass' => PASSWORD_SERVER_2,
         'path' => '/www/htdocs/w01bcb0d/dev.karafinds.com',
-        'name' => 'DEV',
+        'user_ftp' => '',
+        'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
         'type' => 'self'
     ],
     [
+        'name' => 'Karatekes Shop',
         'url' => 'https://karatekes.com',
         'host' => '',
         'port' => '',
         'user' => '',
         'pass' => '',
         'path' => '/www/htdocs/w01bcb0d/karatekes.com',
-        'name' => 'Karatekes Shop',
+        'user_ftp' => '',
+        'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
         'type' => 'shopify'
     ],
     [
+        'name' => 'F35 Performance',
         'url' => 'https://f35performance.com/',
-        'host' => '',
+        'host' => 'w01f2ac6.kasserver.com',
         'port' => '',
         'user' => '',
         'pass' => '',
         'path' => '/www/htdocs/w015a999/f35performance.com',
-        'name' => 'F35 Performance',
-        'user_api' => '',
-        'pass_api' => '',
+        'user_ftp' => 'w01f2ac6',
+        'pass_ftp' => 'tqDH5RxooE7nGc68zCUQ',
+        'user_api' => 'AdminSinan',
+        'pass_api' => 'QDBdJ4vWjfRertTGhQbR',
         'type' => 'wordpress'
     ],
     [
+        'name' => 'FixRepair Berlin',
         'url' => 'https://fixrepairberlin.de/',
         'host' => '',
         'port' => '',
         'user' => '',
         'pass' => '',
         'path' => '/www/htdocs/w015a999/fixrepairberlin.de',
-        'name' => 'FixRepair Berlin',
+        'user_ftp' => '',
+        'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
         'type' => 'wordpress'
     ],
     [
+        'name' => 'Faceart Berlin',
         'url' => 'https://faceart-berlin.de/',
         'host' => '',
         'port' => '',
         'user' => '',
         'pass' => '',
         'path' => '/www/htdocs/w015a999/faceart-berlin.de',
-        'name' => 'Faceart Berlin',
+        'user_ftp' => '',
+        'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
         'type' => 'wordpress'
     ],
     [
+        'name' => 'Alpay Solaranlagen',
         'url' => 'https://alpaysolar.de/',
         'host' => '',
         'port' => '',
         'user' => '',
         'pass' => '',
         'path' => '/www/htdocs/w015a999/alpaysolar.de',
-        'name' => 'Alpay Solaranlagen',
+        'user_ftp' => '',
+        'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
         'type' => 'wordpress'
     ],
     [
+        'name' => 'Alenrec Reinigung',
         'url' => 'https://alenrec-reinigung.de/',
         'host' => '',
         'port' => '',
         'user' => '',
         'pass' => '',
         'path' => '/www/htdocs/w015a999/alenrec-reinigung.de',
-        'name' => 'Alenrec Reinigung',
+        'user_ftp' => '',
+        'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
         'type' => 'wordpress'
     ],
     [
+        'name' => 'Kosmetikstudio 61',
         'url' => 'http://kosmetik61.de/',
         'host' => '',
         'port' => '',
         'user' => '',
         'pass' => '',
         'path' => '',
-        'name' => 'Kosmetikstudio 61',
+        'user_ftp' => '',
+        'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
         'type' => ''
@@ -132,52 +151,34 @@ if ($userLogged) {
                 <div class="row">
                     <div class="col-md-12">
                         <h2>Willkommen bei Webdesign Karateke</h2>
-                        <p></p>
                     </div>
                     <div class="col-md-12">
                         <h3>Überwachung</h3>
-                        <p></p>
-
-                        <div class="row">
+                        <div class="row" id="sortable-cards">
                             <?php foreach ($websites as $website) : ?>
-                                <div class="col-md-6">
+                                <div class="col-md-6 sortable-card">
                                     <div class="card mb-4">
                                         <div class="card-header">
                                             <i class="fas fa-globe"></i> <?php echo htmlspecialchars($website['name']); ?>
-                                            <span class="float-end" id="availability-status-header-<?php echo md5($website['url']); ?>">
-                                                <i class="fas fa-spinner fa-spin"></i> Lade Verfügbarkeitsdaten...
-                                            </span>
+                                            <span class="float-end" id="availability-status-header-<?php echo md5($website['url']); ?>"></span>
                                         </div>
                                         <div class="card-body">
                                             <button class="btn btn-primary" onclick="checkAvailability('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
-                                                <i class="fas fa-globe"></i>
+                                                <i class="fas fa-globe"></i> Verfügbarkeit prüfen
                                             </button>
-                                            Verfügbarkeit prüfen
-                                            <ul id="availability-status-<?php echo md5($website['url']); ?>" class="mt-2">
-                                                <li>
-                                                    <div class="spinner-border text-primary d-none" role="status">
-                                                        <span class="visually-hidden">Lade Verfügbarkeitsdaten...</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <button class="btn btn-primary" onclick="checkLoadTime('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
-                                                <i class="fas fa-tachometer-alt"></i>
-                                            </button> Ladezeiten prüfen
-                                            <ul id="loadtime-status-<?php echo md5($website['url']); ?>" class="mt-2">
-                                                <li>
-                                                    <div class="spinner-border text-primary d-none" role="status">
-                                                        <span class="visually-hidden">Lade Ladezeitdaten...</span>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <button class="btn btn-primary" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['user_api']; ?>', '<?php echo $website['pass_api']; ?>', '<?php echo $website['type']; ?>')">
-                                                <i class="fas fa-sync-alt"></i>
-                                            </button> Updates prüfen
-                                            <p id="updates-status-<?php echo md5($website['url']); ?>" class="mt-2">Lade Updates...</p>
-                                            <button class="btn btn-primary" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')">
-                                                <i class="fas fa-shield-alt"></i>
-                                            </button> Sicherheitsstatus prüfen
-                                            <p id="security-status-<?php echo md5($website['url']); ?>" class="mt-2">Lade Sicherheitsdaten...</p>
+                                            <div id="availability-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                            <button class="btn btn-primary mt-3" onclick="checkLoadTime('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
+                                                <i class="fas fa-tachometer-alt"></i> Ladezeiten prüfen
+                                            </button>
+                                            <div id="loadtime-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                            <button class="btn btn-primary mt-3" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['user_api']; ?>', '<?php echo $website['pass_api']; ?>', '<?php echo $website['type']; ?>')">
+                                                <i class="fas fa-sync-alt"></i> Updates prüfen
+                                            </button>
+                                            <div id="updates-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                            <button class="btn btn-primary mt-3" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')">
+                                                <i class="fas fa-shield-alt"></i> Sicherheitsstatus prüfen
+                                            </button>
+                                            <div id="security-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -191,25 +192,47 @@ if ($userLogged) {
             &copy; 2023 Webdesign Karateke - Alle Rechte vorbehalten.
         </footer>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
         <script>
             $(document).ready(function() {
+                $("#sortable-cards").sortable({
+                    handle: ".card-header",
+                    placeholder: "sortable-placeholder"
+                });
+
                 var websites = <?php echo json_encode($websites); ?>;
                 websites.forEach(function(website) {
-                    var urlHash = CryptoJS.MD5(website.url).toString()
+                    var urlHash = CryptoJS.MD5(website.url).toString();
                     checkAvailability(website.url, urlHash);
                     checkLoadTime(website.url, urlHash);
                 });
             });
 
+            function showSpinner(elementId) {
+                var element = document.getElementById(elementId);
+                element.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Lade Daten...</span></div>';
+            }
+
+            function hideSpinner(elementId) {
+                var element = document.getElementById(elementId);
+                element.innerHTML = '';
+            }
+
             function checkAvailability(url, urlHash) {
+                var statusListId = 'availability-status-' + urlHash;
+                var statusHeaderId = 'availability-status-header-' + urlHash;
+                showSpinner(statusListId);
+                showSpinner(statusHeaderId);
                 $.get('check_availability.php', {
                     url: url
                 }, function(data) {
+                    hideSpinner(statusListId);
+                    hideSpinner(statusHeaderId);
                     var results = JSON.parse(data);
-                    var statusList = $('#availability-status-' + urlHash);
-                    var statusHeader = $('#availability-status-header-' + urlHash);
+                    var statusList = $('#' + statusListId);
+                    var statusHeader = $('#' + statusHeaderId);
                     statusList.empty();
                     statusHeader.empty();
                     $.each(results, function(url, status) {
@@ -231,13 +254,15 @@ if ($userLogged) {
                 });
             }
 
-
             function checkLoadTime(url, urlHash) {
+                var statusListId = 'loadtime-status-' + urlHash;
+                showSpinner(statusListId);
                 $.get('check_loadtime.php', {
                     url: url
                 }, function(data) {
+                    hideSpinner(statusListId);
                     var results = JSON.parse(data);
-                    var statusList = $('#loadtime-status-' + urlHash);
+                    var statusList = $('#' + statusListId);
                     statusList.empty();
                     $.each(results, function(url, time) {
                         var icon;
@@ -254,6 +279,8 @@ if ($userLogged) {
             }
 
             function checkSecurity(url, host, port, user, pass, path, urlHash) {
+                var statusListId = 'security-status-' + urlHash;
+                showSpinner(statusListId);
                 $.get('check_security.php', {
                     url: url,
                     host: host,
@@ -262,26 +289,42 @@ if ($userLogged) {
                     pass: pass,
                     path: path
                 }, function(data) {
-                    $('#security-status-' + urlHash).html(data);
+                    hideSpinner(statusListId);
+                    $('#' + statusListId).html(data);
                 });
             }
 
-            function checkUpdates(url, urlHash, user, pass, type) {
+            function checkUpdates(url, urlHash, user_api, pass_api, type) {
+                var statusListId = 'updates-status-' + urlHash;
+                showSpinner(statusListId);
                 $.get('check_updates.php', {
                     url: url,
-                    user: user,
-                    pass: pass,
+                    user_api: user_api,
+                    pass_api: pass_api,
                     type: type
                 }, function(data) {
-                    $('#updates-status-' + urlHash).html(data);
+                    hideSpinner(statusListId);
+                    $('#' + statusListId).html(data);
                 });
             }
         </script>
-    <?php
-} else {
-    include('auth/login.php'); // Anmeldeseite
-}
-    ?>
+        <style>
+            .sortable-placeholder {
+                background-color: #f0f0f0;
+                border: 1px dashed #ccc;
+                height: 100px;
+                margin-bottom: 20px;
+                visibility: visible !important;
+            }
+        </style>
     </body>
 
     </html>
+<?php
+} else {
+    include('auth/login.php'); // Anmeldeseite
+}
+?>
+</body>
+
+</html>

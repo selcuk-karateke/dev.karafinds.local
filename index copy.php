@@ -2,7 +2,7 @@
 require_once 'bootstrap.php';
 $title = "Homepage";
 $meta_description = "Willkommen bei Webdesign Karateke";
-// $additional_head_content = '<link rel="stylesheet" href="index.css">';
+// $additional_head_content_1 = '<link rel="stylesheet" href="index.css">';
 include 'parts/head.php';
 
 if ($userLogged) {

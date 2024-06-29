@@ -5,15 +5,15 @@ require_once 'classes/UpdatesMonitor.php';
 
 // URL aus den GET-Parametern holen
 $url = isset($_GET['url']) ? $_GET['url'] : null;
-$user = isset($_GET['user']) ? $_GET['user'] : null;
-$pass = isset($_GET['pass']) ? $_GET['pass'] : null;
+$user_api = isset($_GET['user_api']) ? $_GET['user_api'] : null;
+$pass_api = isset($_GET['pass_api']) ? $_GET['pass_api'] : null;
 $type = isset($_GET['type']) ? $_GET['type'] : null;
 
 if (isset($_GET['type']) && $_GET['type'] == 'wordpress') {
     $url = $_GET['url'];
     $cacertPath = __DIR__ . DIRECTORY_SEPARATOR . "auth" . DIRECTORY_SEPARATOR . "cacert.pem";
 
-    $monitor = new UpdatesMonitor($url, $user, $pass);
+    $monitor = new UpdatesMonitor($url, $user_api, $pass_api);
     $updates = $monitor->getUpdates();
 
     if (isset($updates['error'])) {

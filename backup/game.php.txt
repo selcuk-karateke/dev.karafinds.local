@@ -2,7 +2,7 @@
 require_once 'bootstrap.php';
 $title = "Einfaches 2D-Spiel - Webdesign Karateke";
 $meta_description = "Game - Willkommen bei Webdesign Karateke";
-$additional_head_content = '<link rel="stylesheet" href="game.css">';
+$additional_head_content_1 = '<link rel="stylesheet" href="game.css">';
 
 if (!isset($_SESSION['score'])) {
     $_SESSION['score'] = 0;

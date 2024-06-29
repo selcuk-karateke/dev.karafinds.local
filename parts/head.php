@@ -11,7 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 
-    <?php if (isset($additional_head_content)) echo $additional_head_content; ?>
+    <?php if (isset($additional_head_content_1)) echo $additional_head_content_1; ?>
+    <?php if (isset($additional_head_content_2)) echo $additional_head_content_2; ?>
     <script>
         // Sofortiges Setzen des Dark Mode basierend auf localStorage oder Systemeinstellung
         (function() {})();
