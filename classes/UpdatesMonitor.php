@@ -20,7 +20,16 @@ class UpdatesMonitor
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_USERPWD, $this->username . ":" . $this->password);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // SSL-Verifizierung deaktivieren
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); // SSL-Verifizierung deaktivieren
         $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            $error_msg = curl_error($ch);
+            curl_close($ch);
+            return ['error' => 'CURL error: ' . $error_msg];
+        }
+
         curl_close($ch);
 
         $decodedResponse = json_decode($response, true);
@@ -36,8 +45,12 @@ class UpdatesMonitor
         $plugins = $this->makeRequest("/wp-json/wp/v2/plugins");
         $themes = $this->makeRequest("/wp-json/wp/v2/themes");
 
-        if (isset($plugins['error']) || isset($themes['error'])) {
-            return ['plugins' => [], 'themes' => [], 'error' => 'Failed to fetch updates'];
+        if (isset($plugins['error'])) {
+            return ['error' => 'Failed to fetch plugin updates: ' . $plugins['error']];
+        }
+
+        if (isset($themes['error'])) {
+            return ['error' => 'Failed to fetch theme updates: ' . $themes['error']];
         }
 
         return ['plugins' => $plugins, 'themes' => $themes];

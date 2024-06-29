@@ -1,16 +1,23 @@
 <?php
 require_once 'classes/SecurityMonitor.php';
 
-$host = 'w01bcb0d.kasserver.com'; // Der entfernte WordPress-Server
-$port = 22; // Standard-SSH-Port
-$username = 'ssh-w01bcb0d';
-$password = 'JPw9vZ6uBJBLzDMzqZRF';
-$directory = '/www/htdocs/w01bcb0d/dev.karafinds.com'; // Verzeichnis der WordPress-Seite auf dem entfernten Server
+$url = $_GET['url'] ?? null;
+$path = $_GET['path'] ?? null;
+$host = $_GET['host'] ?? null;
+$port = $_GET['port'] ?? null;
+$user = $_GET['user'] ?? null;
+$pass = $_GET['pass'] ?? null;
+
+if (!$path) {
+    echo "Invalid Path";
+    exit;
+}
 
 try {
-    $monitor = new Karatekes\SecurityMonitor($host, $port, $username, $password, $directory);
+    $monitor = new Karatekes\SecurityMonitor($host, $port, $user, $pass, $path);
     $status = $monitor->malwareScan();
-    echo nl2br($status);
+    // echo nl2br($status);
+    echo $status;
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }

@@ -1,23 +1,16 @@
 <?php
 require_once 'classes/AvailabilityMonitor.php';
 
-$urls = [
-    'https://karateke-webdesign.de',
-    'https://karatekes.com/',
-    'https://f35performance.com/',
-    'https://fixrepairberlin.de/',
-    'https://faceart-berlin.de/',
-    'https://alpaysolar.de/',
-    'https://alenrec-reinigung.de/',
-    'http://kosmetik61.de/',
-];
+// URL aus den GET-Parametern holen
+$url = isset($_GET['url']) ? $_GET['url'] : null;
 
-$cacertPath = __DIR__ . DIRECTORY_SEPARATOR . "auth" . DIRECTORY_SEPARATOR . "cacert.pem";
-$results = [];
-
-foreach ($urls as $url) {
+if ($url) {
+    $cacertPath = __DIR__ . DIRECTORY_SEPARATOR . "auth" . DIRECTORY_SEPARATOR . "cacert.pem";
     $monitor = new Karatekes\AvailabilityMonitor($url, $cacertPath);
-    $results[$url] = $monitor->check();
-}
+    $result = $monitor->check();
 
-echo json_encode($results);
+    $response = [$url => $result];
+    echo json_encode($response);
+} else {
+    echo json_encode(['error' => 'Keine URL angegeben']);
+}

@@ -25,19 +25,49 @@ class SecurityMonitor
     {
         $malwarePatterns = ['eval', 'base64_decode', 'exec', 'shell_exec'];
         $command = "grep -r -n -E '" . implode('|', $malwarePatterns) . "' " . escapeshellarg($this->directory);
+
         $output = $this->ssh->exec($command);
+        if ($output === false) {
+            throw new \Exception('Error executing command: ' . $this->ssh->getLastError());
+        }
 
         if (empty($output)) {
             return "No malware detected.";
         } else {
-            $detailedOutput = "Malware found:\n";
+            $detailedOutput = "Malware found:<div class='accordion' id='accordionExample'>";
             $lines = explode("\n", trim($output));
+            $index = 0;
             foreach ($lines as $line) {
-                list($filePath, $lineNumber, $match) = explode(':', $line, 3);
-                $contextCommand = "sed -n '" . ($lineNumber - 2) . "," . ($lineNumber + 2) . "p' " . escapeshellarg($filePath);
-                $context = $this->ssh->exec($contextCommand);
-                $detailedOutput .= "\nFile: $filePath\nLine: $lineNumber\n<code>Code:\n$context\n</code>";
+                $parts = explode(':', $line, 3);
+                if (count($parts) === 3) {
+                    list($filePath, $lineNumber, $match) = $parts;
+                    $fileName = basename($filePath); // Nur den Dateinamen extrahieren
+                    if (is_numeric($lineNumber)) {
+                        $lineNumber = (int)$lineNumber;
+                        $contextCommand = "sed -n '" . ($lineNumber - 2) . "," . ($lineNumber + 2) . "p' " . escapeshellarg($filePath);
+                        $context = $this->ssh->exec($contextCommand);
+                        if ($context === false) {
+                            throw new \Exception('Error executing context command: ' . $this->ssh->getLastError());
+                        }
+                        $detailedOutput .= "
+                <div class='accordion-item'>
+                    <h2 class='accordion-header' id='heading{$index}'>
+                        <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapse{$index}' aria-expanded='false' aria-controls='collapse{$index}'>
+                            File: $fileName, Line: $lineNumber
+                        </button>
+                    </h2>
+                    <div id='collapse{$index}' class='accordion-collapse collapse' aria-labelledby='heading{$index}' data-bs-parent='#accordionExample'>
+                        <div class='accordion-body'>
+                            File: $filePath<br> 
+                            <code>Code: $context</code>
+                        </div>
+                    </div>
+                </div>";
+                        $index++;
+                    }
+                }
             }
+            $detailedOutput .= "</div>";
             return $detailedOutput;
         }
     }
