@@ -1,5 +1,5 @@
 <?php
-require_once 'classes/LoadTimeMonitor.php';
+require_once '../classes/LoadTimeMonitor.php';
 
 // Prüfen, ob die URL als Parameter übergeben wurde
 if (isset($_GET['url'])) {

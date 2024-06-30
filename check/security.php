@@ -1,5 +1,5 @@
 <?php
-require_once 'classes/SecurityMonitor.php';
+require_once '../classes/SecurityMonitor.php';
 
 $url = $_GET['url'] ?? null;
 $path = $_GET['path'] ?? null;

@@ -84,7 +84,7 @@ if ($userLogged) {
 
         <script>
             $(document).ready(function() {
-                $.get('check_availability.php', function(data) {
+                $.get('check/availability.php', function(data) {
                     var results = JSON.parse(data);
                     var statusList = $('#availability-status');
                     statusList.empty();
@@ -100,10 +100,10 @@ if ($userLogged) {
                         statusList.append('<li>' + url + ': ' + icon + ' ' + status + '</li>');
                     });
                 });
-                $.get('check_security.php', function(data) {
+                $.get('check/security.php', function(data) {
                     $('#security-status').html(data);
                 });
-                $.get('check_loadtime.php', function(data) {
+                $.get('check/loadtime.php', function(data) {
                     var results = JSON.parse(data);
                     var statusList = $('#loadtime-status');
                     statusList.empty();
@@ -119,7 +119,7 @@ if ($userLogged) {
                         statusList.append('<li>' + url + ': ' + icon + ' ' + time.toFixed(2) + ' Sekunden</li>');
                     });
                 });
-                $.get('check_updates.php', function(data) {
+                $.get('check/updates.php', function(data) {
                     $('#updates-status').html(data);
                 });
             });

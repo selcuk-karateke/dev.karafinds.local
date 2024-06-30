@@ -21,7 +21,8 @@ $websites = [
         'pass_ftp' => '',
         'user_api' => 'AdminKarateke',
         'pass_api' => 'WebKara24',
-        'type' => 'wordpress'
+        'type' => 'wordpress',
+        'spam_api' => 'd9dde23d1c26'
     ],
     [
         'name' => 'DEV',
@@ -35,7 +36,8 @@ $websites = [
         'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
-        'type' => 'self'
+        'type' => 'self',
+        'spam_api' => ''
     ],
     [
         'name' => 'Karatekes Shop',
@@ -49,7 +51,8 @@ $websites = [
         'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
-        'type' => 'shopify'
+        'type' => 'shopify',
+        'spam_api' => ''
     ],
     [
         'name' => 'F35 Performance',
@@ -63,7 +66,8 @@ $websites = [
         'pass_ftp' => 'tqDH5RxooE7nGc68zCUQ',
         'user_api' => 'AdminSinan',
         'pass_api' => 'QDBdJ4vWjfRertTGhQbR',
-        'type' => 'wordpress'
+        'type' => 'wordpress',
+        'spam_api' => ''
     ],
     [
         'name' => 'FixRepair Berlin',
@@ -77,7 +81,8 @@ $websites = [
         'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
-        'type' => 'wordpress'
+        'type' => 'wordpress',
+        'spam_api' => ''
     ],
     [
         'name' => 'Faceart Berlin',
@@ -91,7 +96,8 @@ $websites = [
         'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
-        'type' => 'wordpress'
+        'type' => 'wordpress',
+        'spam_api' => ''
     ],
     [
         'name' => 'Alpay Solaranlagen',
@@ -105,7 +111,8 @@ $websites = [
         'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
-        'type' => 'wordpress'
+        'type' => 'wordpress',
+        'spam_api' => ''
     ],
     [
         'name' => 'Alenrec Reinigung',
@@ -119,7 +126,8 @@ $websites = [
         'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
-        'type' => 'wordpress'
+        'type' => 'wordpress',
+        'spam_api' => ''
     ],
     [
         'name' => 'Kosmetikstudio 61',
@@ -133,7 +141,8 @@ $websites = [
         'pass_ftp' => '',
         'user_api' => '',
         'pass_api' => '',
-        'type' => ''
+        'type' => '',
+        'spam_api' => ''
     ],
     // Füge weitere Webseiten hier hinzu
 ];
@@ -163,7 +172,7 @@ if ($userLogged) {
                                             <span class="float-end" id="availability-status-header-<?php echo md5($website['url']); ?>"></span>
                                         </div>
                                         <div class="card-body">
-                                            <button class="btn btn-primary" onclick="checkAvailability('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
+                                            <button class="btn btn-primary mt-3" onclick="checkAvailability('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
                                                 <i class="fas fa-globe"></i> Verfügbarkeit prüfen
                                             </button>
                                             <div id="availability-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
@@ -175,6 +184,10 @@ if ($userLogged) {
                                                 <i class="fas fa-sync-alt"></i> Updates prüfen
                                             </button>
                                             <div id="updates-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                            <button class="btn btn-primary mt-3" onclick="checkComments('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['spam_api']; ?>')">
+                                                <i class="fas fa-comments"></i> Kommentare prüfen
+                                            </button>
+                                            <div id="comments-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
                                             <button class="btn btn-primary mt-3" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')">
                                                 <i class="fas fa-shield-alt"></i> Sicherheitsstatus prüfen
                                             </button>
@@ -225,7 +238,7 @@ if ($userLogged) {
                 var statusHeaderId = 'availability-status-header-' + urlHash;
                 showSpinner(statusListId);
                 showSpinner(statusHeaderId);
-                $.get('check_availability.php', {
+                $.get('check/availability.php', {
                     url: url
                 }, function(data) {
                     hideSpinner(statusListId);
@@ -257,7 +270,7 @@ if ($userLogged) {
             function checkLoadTime(url, urlHash) {
                 var statusListId = 'loadtime-status-' + urlHash;
                 showSpinner(statusListId);
-                $.get('check_loadtime.php', {
+                $.get('check/loadtime.php', {
                     url: url
                 }, function(data) {
                     hideSpinner(statusListId);
@@ -278,30 +291,65 @@ if ($userLogged) {
                 });
             }
 
-            function checkSecurity(url, host, port, user, pass, path, urlHash) {
-                var statusListId = 'security-status-' + urlHash;
+            function checkUpdates(url, urlHash, user_api, pass_api, type) {
+                var statusListId = 'updates-status-' + urlHash;
                 showSpinner(statusListId);
-                $.get('check_security.php', {
+                $.get('check/updates.php', {
                     url: url,
-                    host: host,
-                    port: port,
-                    user: user,
-                    pass: pass,
-                    path: path
+                    user_api: user_api,
+                    pass_api: pass_api,
+                    type: type
                 }, function(data) {
                     hideSpinner(statusListId);
                     $('#' + statusListId).html(data);
                 });
             }
 
-            function checkUpdates(url, urlHash, user_api, pass_api, type) {
-                var statusListId = 'updates-status-' + urlHash;
+            function checkComments(url, urlHash, spamApi) {
+                var statusListId = 'comments-status-' + urlHash;
                 showSpinner(statusListId);
-                $.get('check_updates.php', {
+                $.get('fetch/comments.php', {
+                    url: url
+                }, function(comments) {
+                    hideSpinner(statusListId);
+                    var statusList = $('#' + statusListId);
+                    statusList.empty();
+                    $.each(JSON.parse(comments), function(index, comment) {
+                        var commentData = {
+                            permalink: comment.link,
+                            comment_type: 'comment',
+                            comment_author: comment.author_name,
+                            comment_author_email: comment.author_email,
+                            comment_author_url: comment.author_url,
+                            comment_content: comment.content.rendered
+                        };
+                        $.post('check/comment.php', {
+                            spam_api: spamApi,
+                            blog_url: url,
+                            comment: commentData
+                        }, function(data) {
+                            var icon;
+                            if (data == 'true') {
+                                icon = '<i class="fas fa-times-circle text-danger"></i> Spam';
+                            } else {
+                                icon = '<i class="fas fa-check-circle text-success"></i> Kein Spam';
+                            }
+                            statusList.append('<div>' + commentData.comment_author + ': ' + icon + '</div>');
+                        });
+                    });
+                });
+            }
+
+            function checkSecurity(url, host, port, user, pass, path, urlHash) {
+                var statusListId = 'security-status-' + urlHash;
+                showSpinner(statusListId);
+                $.get('check/security.php', {
                     url: url,
-                    user_api: user_api,
-                    pass_api: pass_api,
-                    type: type
+                    host: host,
+                    port: port,
+                    user: user,
+                    pass: pass,
+                    path: path
                 }, function(data) {
                     hideSpinner(statusListId);
                     $('#' + statusListId).html(data);

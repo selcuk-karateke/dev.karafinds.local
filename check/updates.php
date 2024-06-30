@@ -1,5 +1,5 @@
 <?php
-require_once 'classes/UpdatesMonitor.php';
+require_once '../classes/UpdatesMonitor.php';
 // Download the wordpress plugin into your plugins directory
 // https://github.com/WP-API/Basic-Auth
 
@@ -11,7 +11,8 @@ $type = isset($_GET['type']) ? $_GET['type'] : null;
 
 if (isset($_GET['type']) && $_GET['type'] == 'wordpress') {
     $url = $_GET['url'];
-    $cacertPath = __DIR__ . DIRECTORY_SEPARATOR . "auth" . DIRECTORY_SEPARATOR . "cacert.pem";
+    // $cacertPath = __DIR__ . DIRECTORY_SEPARATOR . "auth" . DIRECTORY_SEPARATOR . "cacert.pem";
+    $cacertPath = __DIR__ . '/../auth/cacert.pem';
 
     $monitor = new UpdatesMonitor($url, $user_api, $pass_api);
     $updates = $monitor->getUpdates();
