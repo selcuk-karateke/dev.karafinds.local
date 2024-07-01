@@ -172,24 +172,34 @@ if ($userLogged) {
                                             <span class="float-end" id="availability-status-header-<?php echo md5($website['url']); ?>"></span>
                                         </div>
                                         <div class="card-body">
+                                            <h3>Verfügbarkeit prüfen</h3>
                                             <button class="btn btn-primary mt-3" onclick="checkAvailability('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
-                                                <i class="fas fa-globe"></i> Verfügbarkeit prüfen
+                                                <i class="fas fa-globe"></i>
                                             </button>
                                             <div id="availability-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                            <h3>Ladezeiten prüfen</h3>
                                             <button class="btn btn-primary mt-3" onclick="checkLoadTime('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
-                                                <i class="fas fa-tachometer-alt"></i> Ladezeiten prüfen
+                                                <i class="fas fa-tachometer-alt"></i>
                                             </button>
                                             <div id="loadtime-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                            <h3>Updates prüfen</h3>
                                             <button class="btn btn-primary mt-3" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['user_api']; ?>', '<?php echo $website['pass_api']; ?>', '<?php echo $website['type']; ?>')">
-                                                <i class="fas fa-sync-alt"></i> Updates prüfen
+                                                <i class="fas fa-sync-alt"></i>
                                             </button>
                                             <div id="updates-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                            <h3>Kommentare prüfen</h3>
                                             <button class="btn btn-primary mt-3" onclick="checkComments('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['spam_api']; ?>')">
-                                                <i class="fas fa-comments"></i> Kommentare prüfen
+                                                <i class="fas fa-comments"></i>
                                             </button>
                                             <div id="comments-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                            <h3>SEO-Daten prüfen</h3>
+                                            <button class="btn btn-primary mt-3" onclick="checkSEO('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                            <div id="seo-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                            <h3>Sicherheitsstatus prüfen</h3>
                                             <button class="btn btn-primary mt-3" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')">
-                                                <i class="fas fa-shield-alt"></i> Sicherheitsstatus prüfen
+                                                <i class="fas fa-shield-alt"></i>
                                             </button>
                                             <div id="security-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
                                         </div>
@@ -337,6 +347,23 @@ if ($userLogged) {
                             statusList.append('<div>' + commentData.comment_author + ': ' + icon + '</div>');
                         });
                     });
+                });
+            }
+
+            function checkSEO(url, urlHash) {
+                var statusListId = 'seo-status-' + urlHash;
+                showSpinner(statusListId);
+                $.get('check/seo.php', {
+                    url: url
+                }, function(data) {
+                    hideSpinner(statusListId);
+                    var results = JSON.parse(data);
+                    var statusList = $('#' + statusListId);
+                    statusList.empty();
+                    statusList.append('<div><strong>Titel:</strong> ' + results.title + '</div>');
+                    statusList.append('<div><strong>Beschreibung:</strong> ' + results.description + '</div>');
+                    statusList.append('<div><strong>Sitemap:</strong> <a href="' + results.sitemap + '">' + results.sitemap + '</a></div>');
+                    statusList.append('<div><strong>Robots.txt:</strong> <pre>' + results.robots + '</pre></div>');
                 });
             }
 
