@@ -172,33 +172,27 @@ if ($userLogged) {
                                             <span class="float-end" id="availability-status-header-<?php echo md5($website['url']); ?>"></span>
                                         </div>
                                         <div class="card-body">
-                                            <h3>Verfügbarkeit prüfen</h3>
-                                            <button class="btn btn-primary mt-3" onclick="checkAvailability('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
+                                            <button class="btn btn-primary mt-3" onclick="checkAvailability('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Verfügbarkeit prüfen">
                                                 <i class="fas fa-globe"></i>
                                             </button>
                                             <div id="availability-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
-                                            <h3>Ladezeiten prüfen</h3>
-                                            <button class="btn btn-primary mt-3" onclick="checkLoadTime('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
+                                            <button class="btn btn-primary mt-3" onclick="checkLoadTime('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Ladezeiten prüfen">
                                                 <i class="fas fa-tachometer-alt"></i>
                                             </button>
                                             <div id="loadtime-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
-                                            <h3>Updates prüfen</h3>
-                                            <button class="btn btn-primary mt-3" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['user_api']; ?>', '<?php echo $website['pass_api']; ?>', '<?php echo $website['type']; ?>')">
+                                            <button class="btn btn-primary mt-3" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['user_api']; ?>', '<?php echo $website['pass_api']; ?>', '<?php echo $website['type']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Updates prüfen">
                                                 <i class="fas fa-sync-alt"></i>
                                             </button>
                                             <div id="updates-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
-                                            <h3>Kommentare prüfen</h3>
-                                            <button class="btn btn-primary mt-3" onclick="checkComments('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['spam_api']; ?>')">
+                                            <button class="btn btn-primary mt-3" onclick="checkComments('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['spam_api']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Kommentare prüfen">
                                                 <i class="fas fa-comments"></i>
                                             </button>
                                             <div id="comments-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
-                                            <h3>SEO-Daten prüfen</h3>
-                                            <button class="btn btn-primary mt-3" onclick="checkSEO('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')">
+                                            <button class="btn btn-primary mt-3" onclick="checkSEO('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="SEO-Daten prüfen">
                                                 <i class="fas fa-search"></i>
                                             </button>
                                             <div id="seo-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
-                                            <h3>Sicherheitsstatus prüfen</h3>
-                                            <button class="btn btn-primary mt-3" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')">
+                                            <button class="btn btn-primary mt-3" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Sicherheitsstatus prüfen">
                                                 <i class="fas fa-shield-alt"></i>
                                             </button>
                                             <div id="security-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
@@ -224,7 +218,10 @@ if ($userLogged) {
                     handle: ".card-header",
                     placeholder: "sortable-placeholder"
                 });
-
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl)
+                });
                 var websites = <?php echo json_encode($websites); ?>;
                 websites.forEach(function(website) {
                     var urlHash = CryptoJS.MD5(website.url).toString();

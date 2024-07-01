@@ -2,7 +2,7 @@
 // classes/SecurityMonitor.php
 namespace Karatekes;
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use phpseclib3\Net\SSH2;
 
@@ -12,8 +12,11 @@ class SecurityMonitor
     private $ssh;
     private $directory;
 
-    public function __construct($host, $port, $username, $password, $directory)
+    public function __construct($host, $username, $password, $directory, $port = 22)
     {
+        // Sicherstellen, dass der Port ein Integer ist
+        $port = (int)$port;
+
         $this->ssh = new SSH2($host, $port);
         if (!$this->ssh->login($username, $password)) {
             throw new \Exception('Login failed');
