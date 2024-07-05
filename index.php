@@ -246,7 +246,7 @@ if ($userLogged) {
 
             function showSpinner(elementId) {
                 var element = document.getElementById(elementId);
-                element.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="visually-hidden">Lade Daten...</span></div>';
+                element.innerHTML = '<div class="spinner-grow spinner-grow-sm text-primary" role="status"><span class="visually-hidden">Lade Daten...</span></div>';
             }
 
             function hideSpinner(elementId) {
