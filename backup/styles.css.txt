@@ -1,14 +1,14 @@
 body {
     font-family: Arial, sans-serif;
-    margin     : 0;
-    padding    : 0;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
     min-height: 960px;
-    width     : 80%;
-    margin    : 20px auto;
-    padding   : 20px;
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -16,12 +16,7 @@ header h1 {}
 
 nav ul {
     list-style-type: none;
-    padding        : 0;
-}
-
-nav ul li {
-    display     : inline;
-    margin-right: 10px;
+    padding: 0;
 }
 
 nav ul li a {
@@ -36,39 +31,40 @@ section h2 {}
     -webkit-text-fill-color: white;
     paint-order: stroke;
 }
+
 footer {
     text-align: center;
-    padding   : 10px;
-    position  : fixed;
-    width     : 100%;
-    bottom    : 0;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
 
 /* Button styles */
 .btn {
     min-width: 50px;
-    padding   : 8px 16px;
-    border    : none;
-    cursor    : pointer;
-    font-size : 16px;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
     transition: background-color 0.3s, color 0.3s;
 }
 
 .hud {
     background-color: rgba(0, 0, 0, 0.5);
     /* Leicht transparenter Hintergrund */
-    color           : white;
-    padding         : 10px;
-    border-radius   : 5px;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .hud-item {
-    padding    : 10px;
-    margin     : 5px 0;
+    padding: 10px;
+    margin: 5px 0;
     margin-right: 20px;
     min-width: 150px;
     text-align: center;
-    font-size  : 1.2rem;
+    font-size: 1.2rem;
     font-weight: bold;
 }
 

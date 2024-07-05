@@ -1,18 +1,40 @@
 {
     "assets": {
         "images": {
-            "logo.png": "file",
-            "output-onlinepngtools.png": "file"
+            "logo.png": "file"
         }
     },
     "auth": {
+        "cacert.pem": "file",
         "login.php": "file"
     },
     "bootstrap.php": "file",
+    "check": {
+        "availability.php": "file",
+        "comment.php": "file",
+        "loadtime.php": "file",
+        "security.php": "file",
+        "seo.php": "file",
+        "updates.php": "file"
+    },
+    "classes": {
+        "AkismetMonitor.php": "file",
+        "AvailabilityMonitor.php": "file",
+        "LoadTimeMonitor.php": "file",
+        "SecurityMonitor.php": "file",
+        "SEOMonitor.php": "file",
+        "UpdatesMonitor.php": "file"
+    },
+    "composer.json": "file",
+    "composer.lock": "file",
+    "fetch": {
+        "comments.php": "file"
+    },
     "functions.php": "file",
     "game.css": "file",
     "game.js": "file",
     "game.php": "file",
+    "index copy.php": "file",
     "index.php": "file",
     "instagram.php": "file",
     "parts": {

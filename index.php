@@ -1,4 +1,5 @@
 <?php
+// phpinfo();
 require_once 'bootstrap.php';
 $title = "Homepage";
 $meta_description = "Willkommen bei Webdesign Karateke";
@@ -168,34 +169,47 @@ if ($userLogged) {
                                 <div class="col-md-6 sortable-card">
                                     <div class="card mb-4">
                                         <div class="card-header">
-                                            <i class="fas fa-globe"></i> <?php echo htmlspecialchars($website['name']); ?>
-                                            <span class="float-end" id="availability-status-header-<?php echo md5($website['url']); ?>"></span>
+                                            <a href="<?php echo htmlspecialchars($website['url']); ?>">
+                                                <i class="fas fa-globe"></i> <?php echo htmlspecialchars($website['name']); ?>
+                                                <span class="float-end" id="availability-status-header-<?php echo md5($website['url']); ?>"> </span>
+                                                <span class="float-end" id="loadtime-status-header-<?php echo md5($website['url']); ?>"></span>
+                                            </a>
                                         </div>
                                         <div class="card-body">
+                                            <button class="btn btn-primary mt-3" onclick="checkServerLoad('<?php echo $website['url']; ?>', '<?php echo md5($website['url']) ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Serverauslastung prüfen (lokal)">
+                                                <i class="fas fa-server"></i>
+                                            </button>
                                             <button class="btn btn-primary mt-3" onclick="checkAvailability('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Verfügbarkeit prüfen">
                                                 <i class="fas fa-globe"></i>
                                             </button>
-                                            <div id="availability-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
                                             <button class="btn btn-primary mt-3" onclick="checkLoadTime('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Ladezeiten prüfen">
                                                 <i class="fas fa-tachometer-alt"></i>
                                             </button>
-                                            <div id="loadtime-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
                                             <button class="btn btn-primary mt-3" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['user_api']; ?>', '<?php echo $website['pass_api']; ?>', '<?php echo $website['type']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Updates prüfen">
                                                 <i class="fas fa-sync-alt"></i>
                                             </button>
-                                            <div id="updates-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
                                             <button class="btn btn-primary mt-3" onclick="checkComments('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['spam_api']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Kommentare prüfen">
                                                 <i class="fas fa-comments"></i>
                                             </button>
-                                            <div id="comments-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
                                             <button class="btn btn-primary mt-3" onclick="checkSEO('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="SEO-Daten prüfen">
                                                 <i class="fas fa-search"></i>
                                             </button>
-                                            <div id="seo-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                            <button class="btn btn-primary mt-3" onclick="checkGoogleTraffic('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Google Traffic prüfen">
+                                                <i class="fab fa-google"></i>
+                                            </button>
                                             <button class="btn btn-primary mt-3" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Sicherheitsstatus prüfen">
                                                 <i class="fas fa-shield-alt"></i>
                                             </button>
-                                            <div id="security-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                            <br />
+                                            <br />
+                                            <span id="server-load-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
+                                            <!-- <span id="availability-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span> -->
+                                            <!-- <span id="loadtime-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span> -->
+                                            <span id="updates-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
+                                            <span id="comments-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
+                                            <span id="seo-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
+                                            <span id="google-traffic-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
+                                            <span id="security-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -241,19 +255,19 @@ if ($userLogged) {
             }
 
             function checkAvailability(url, urlHash) {
-                var statusListId = 'availability-status-' + urlHash;
+                // var statusListId = 'availability-status-' + urlHash;
                 var statusHeaderId = 'availability-status-header-' + urlHash;
-                showSpinner(statusListId);
+                // showSpinner(statusListId);
                 showSpinner(statusHeaderId);
                 $.get('check/availability.php', {
                     url: url
                 }, function(data) {
-                    hideSpinner(statusListId);
+                    // hideSpinner(statusListId);
                     hideSpinner(statusHeaderId);
                     var results = JSON.parse(data);
-                    var statusList = $('#' + statusListId);
+                    // var statusList = $('#' + statusListId);
                     var statusHeader = $('#' + statusHeaderId);
-                    statusList.empty();
+                    // statusList.empty();
                     statusHeader.empty();
                     $.each(results, function(url, status) {
                         var icon;
@@ -268,22 +282,27 @@ if ($userLogged) {
                             icon = '<i class="fas fa-times-circle text-danger"></i>'; // Rot für andere Fehler
                             headerText = icon + ' Nicht erreichbar';
                         }
-                        statusList.append('<div>' + url + ': ' + icon + ' ' + status + '</div>');
-                        statusHeader.append(headerText);
+                        // statusList.append('');
+                        statusHeader.html('&nbsp' + icon + ' ' + status);
                     });
                 });
             }
 
             function checkLoadTime(url, urlHash) {
-                var statusListId = 'loadtime-status-' + urlHash;
-                showSpinner(statusListId);
+                // var statusListId = 'loadtime-status-' + urlHash;
+                var statusHeaderId = 'loadtime-status-header-' + urlHash;
+                // showSpinner(statusListId);
+                showSpinner(statusHeaderId);
                 $.get('check/loadtime.php', {
                     url: url
                 }, function(data) {
-                    hideSpinner(statusListId);
+                    // hideSpinner(statusListId);
+                    hideSpinner(statusHeaderId);
                     var results = JSON.parse(data);
-                    var statusList = $('#' + statusListId);
-                    statusList.empty();
+                    // var statusList = $('#' + statusListId);
+                    var statusHeader = $('#' + statusHeaderId);
+                    // statusList.empty();
+                    statusHeader.empty();
                     $.each(results, function(url, time) {
                         var icon;
                         if (time < 2) {
@@ -293,7 +312,8 @@ if ($userLogged) {
                         } else {
                             icon = '<i class="fas fa-times-circle text-danger"></i>'; // Rot für schlechte Ladezeit
                         }
-                        statusList.append('<div>' + url + ': ' + icon + ' ' + time.toFixed(2) + ' Sekunden</div>');
+                        // statusList.append('');
+                        statusHeader.html('&nbsp' + icon + ' ' + time.toFixed(2) + 's ');
                     });
                 });
             }
@@ -364,6 +384,18 @@ if ($userLogged) {
                 });
             }
 
+            function checkGoogleTraffic(url, urlHash) {
+                var statusListId = 'google-traffic-status-' + urlHash;
+                showSpinner(statusListId);
+                $.get('check/google_traffic.php', {
+                    url: url,
+                }, function(data) {
+                    hideSpinner(statusListId);
+                    var result = JSON.parse(data);
+                    $('#' + statusListId).html('Besucher von Google: ' + result.google_traffic);
+                });
+            }
+
             function checkSecurity(url, host, port, user, pass, path, urlHash) {
                 var statusListId = 'security-status-' + urlHash;
                 showSpinner(statusListId);
@@ -377,6 +409,48 @@ if ($userLogged) {
                 }, function(data) {
                     hideSpinner(statusListId);
                     $('#' + statusListId).html(data);
+                });
+            }
+
+            function checkServerLoad(url, urlHash, host, port, user, pass) {
+                var statusListId = 'server-load-status-' + urlHash;
+                showSpinner(statusListId);
+                $.get('check/serverLoad.php', {
+                    url: url,
+                    host: host,
+                    port: port,
+                    user: user,
+                    pass: pass,
+                }, function(data) {
+                    hideSpinner(statusListId);
+                    var result = JSON.parse(data);
+                    $('#' + statusListId).html('Serverauslastung: ' + result.load + '%');
+                });
+            }
+
+            function checkDbPerformance(url, host, port, user, pass, path, urlHash) {
+                $.get('check/dbPerformance.php', {
+                    url: url,
+                    host: host,
+                    port: port,
+                    user: user,
+                    pass: pass,
+                    path: path
+                }, function(data) {
+                    $('#db-performance-status').text(data);
+                });
+            }
+
+            function checkGoogleTraffic(url, host, port, user, pass, path, urlHash) {
+                $.get('check/googleTraffic.php', {
+                    url: url,
+                    host: host,
+                    port: port,
+                    user: user,
+                    pass: pass,
+                    path: path
+                }, function(data) {
+                    $('#google-traffic-status').text(data);
                 });
             }
         </script>

@@ -24,7 +24,10 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="textify.php" title="Textify">Textify</a>
+                            <a class="dropdown-item" href="textify.php" title="Textify">Textify</a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
                         </li>
                     </ul>
                 </li>

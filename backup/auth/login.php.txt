@@ -1,7 +1,7 @@
 <?php
 $title = "Login";
 $meta_description = "Login bei Webdesign Karateke";
-// $additional_head_content = '<link rel="stylesheet" href="index.css">';
+// $additional_head_content_1 = '<link rel="stylesheet" href="index.css">';
 include './parts/head.php';
 ?>
 <div class="container">
