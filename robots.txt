@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /backup/
+Disallow: /assets/
+Disallow: /check/
+Disallow: /classes/
+Disallow: /download/
+Disallow: /fetch/
+Disallow: /logs/
+Disallow: /parts/
+Disallow: /src/
+Disallow: /vendor/
+
+User-agent: Googlebot
+Disallow: /dev.php

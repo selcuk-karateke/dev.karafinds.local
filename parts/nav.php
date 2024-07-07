@@ -15,6 +15,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="game.php" tabindex="-1" aria-disabled="false" title="Game">Game</a>
                 </li>
+                <?php if ($userLogged) : ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dev.php" tabindex="-1" aria-disabled="false" title="DEV" rel="nofollow">DEV</a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="policies.php" tabindex="-1" aria-disabled="false" title="Datenschutzrichtlinie">Datenschutzrichtlinie</a>
                 </li>
