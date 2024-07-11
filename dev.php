@@ -40,40 +40,80 @@ if ($userLogged) {
                                             </a>
                                         </div>
                                         <div class="card-body">
-                                            <button class="btn btn-primary mt-3" onclick="checkServerLoad('<?php echo $website['url']; ?>', '<?php echo md5($website['url']) ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Serverauslastung prüfen (lokal)">
-                                                <i class="fas fa-server"></i>
-                                            </button>
-                                            <button class="btn btn-primary mt-3" onclick="checkAvailability('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Verfügbarkeit prüfen">
-                                                <i class="fas fa-globe"></i>
-                                            </button>
-                                            <button class="btn btn-primary mt-3" onclick="checkLoadTime('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Ladezeiten prüfen">
-                                                <i class="fas fa-tachometer-alt"></i>
-                                            </button>
-                                            <button class="btn btn-primary mt-3" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['user_api']; ?>', '<?php echo $website['pass_api']; ?>', '<?php echo $website['type']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Updates prüfen">
-                                                <i class="fas fa-sync-alt"></i>
-                                            </button>
-                                            <button class="btn btn-primary mt-3" onclick="checkComments('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['spam_api']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Kommentare prüfen">
-                                                <i class="fas fa-comments"></i>
-                                            </button>
-                                            <button class="btn btn-primary mt-3" onclick="checkSEO('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="SEO-Daten prüfen">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                            <button class="btn btn-primary mt-3" onclick="checkGoogleTraffic('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Google Traffic prüfen">
-                                                <i class="fab fa-google"></i>
-                                            </button>
-                                            <button class="btn btn-primary mt-3" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Sicherheitsstatus prüfen">
-                                                <i class="fas fa-shield-alt"></i>
-                                            </button>
-                                            <br />
-                                            <br />
-                                            <span id="server-load-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
-                                            <!-- <span id="availability-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span> -->
-                                            <!-- <span id="loadtime-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span> -->
-                                            <span id="updates-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
-                                            <span id="comments-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
-                                            <span id="seo-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
-                                            <span id="google-traffic-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
-                                            <span id="security-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></span>
+                                            <ul class="nav nav-tabs" id="myTab-<?php echo md5($website['url']); ?>" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="server-load-tab-<?php echo md5($website['url']); ?>" data-bs-toggle="tab" data-bs-target="#server-load-<?php echo md5($website['url']); ?>" type="button" role="tab" aria-controls="server-load-<?php echo md5($website['url']); ?>" aria-selected="true"><i class="fas fa-server"></i></button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="availability-tab-<?php echo md5($website['url']); ?>" data-bs-toggle="tab" data-bs-target="#availability-<?php echo md5($website['url']); ?>" type="button" role="tab" aria-controls="availability-<?php echo md5($website['url']); ?>" aria-selected="false"><i class="fas fa-globe"></i></button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="loadtime-tab-<?php echo md5($website['url']); ?>" data-bs-toggle="tab" data-bs-target="#loadtime-<?php echo md5($website['url']); ?>" type="button" role="tab" aria-controls="loadtime-<?php echo md5($website['url']); ?>" aria-selected="false"><i class="fas fa-tachometer-alt"></i></button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="updates-tab-<?php echo md5($website['url']); ?>" data-bs-toggle="tab" data-bs-target="#updates-<?php echo md5($website['url']); ?>" type="button" role="tab" aria-controls="updates-<?php echo md5($website['url']); ?>" aria-selected="false"><i class="fas fa-sync-alt"></i></button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="comments-tab-<?php echo md5($website['url']); ?>" data-bs-toggle="tab" data-bs-target="#comments-<?php echo md5($website['url']); ?>" type="button" role="tab" aria-controls="comments-<?php echo md5($website['url']); ?>" aria-selected="false"><i class="fas fa-comments"></i></button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="seo-tab-<?php echo md5($website['url']); ?>" data-bs-toggle="tab" data-bs-target="#seo-<?php echo md5($website['url']); ?>" type="button" role="tab" aria-controls="seo-<?php echo md5($website['url']); ?>" aria-selected="false"><i class="fas fa-search"></i></button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="google-traffic-tab-<?php echo md5($website['url']); ?>" data-bs-toggle="tab" data-bs-target="#google-traffic-<?php echo md5($website['url']); ?>" type="button" role="tab" aria-controls="google-traffic-<?php echo md5($website['url']); ?>" aria-selected="false"><i class="fab fa-google"></i></button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="security-tab-<?php echo md5($website['url']); ?>" data-bs-toggle="tab" data-bs-target="#security-<?php echo md5($website['url']); ?>" type="button" role="tab" aria-controls="security-<?php echo md5($website['url']); ?>" aria-selected="false"><i class="fas fa-shield-alt"></i></button>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content" id="myTabContent-<?php echo md5($website['url']); ?>">
+                                                <div class="tab-pane fade show active" id="server-load-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="server-load-tab-<?php echo md5($website['url']); ?>">
+                                                    <button class="btn btn-primary mt-3" onclick="checkServerLoad('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Serverauslastung prüfen (lokal)">
+                                                        <i class="fas fa-server"></i> Serverauslastung prüfen
+                                                    </button>
+                                                    <div id="server-load-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                                </div>
+                                                <div class="tab-pane fade" id="availability-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="availability-tab-<?php echo md5($website['url']); ?>">
+                                                    <button class="btn btn-primary mt-3" onclick="checkAvailability('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Verfügbarkeit prüfen">
+                                                        <i class="fas fa-globe"></i> Verfügbarkeit prüfen
+                                                    </button>
+                                                </div>
+                                                <div class="tab-pane fade" id="loadtime-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="loadtime-tab-<?php echo md5($website['url']); ?>">
+                                                    <button class="btn btn-primary mt-3" onclick="checkLoadTime('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Ladezeiten prüfen">
+                                                        <i class="fas fa-tachometer-alt"></i> Ladezeiten prüfen
+                                                    </button>
+                                                </div>
+                                                <div class="tab-pane fade" id="updates-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="updates-tab-<?php echo md5($website['url']); ?>">
+                                                    <button class="btn btn-primary mt-3" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['user_api']; ?>', '<?php echo $website['pass_api']; ?>', '<?php echo $website['type']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Updates prüfen">
+                                                        <i class="fas fa-sync-alt"></i> Updates prüfen
+                                                    </button>
+                                                    <div id="updates-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                                </div>
+                                                <div class="tab-pane fade" id="comments-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="comments-tab-<?php echo md5($website['url']); ?>">
+                                                    <button class="btn btn-primary mt-3" onclick="checkComments('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['spam_api']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Kommentare prüfen">
+                                                        <i class="fas fa-comments"></i> Kommentare prüfen
+                                                    </button>
+                                                    <div id="comments-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                                </div>
+                                                <div class="tab-pane fade" id="seo-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="seo-tab-<?php echo md5($website['url']); ?>">
+                                                    <button class="btn btn-primary mt-3" onclick="checkSEO('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="SEO-Daten prüfen">
+                                                        <i class="fas fa-search"></i> SEO-Daten prüfen
+                                                    </button>
+                                                    <div id="seo-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                                </div>
+                                                <div class="tab-pane fade" id="google-traffic-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="google-traffic-tab-<?php echo md5($website['url']); ?>">
+                                                    <button class="btn btn-primary mt-3" onclick="checkGoogleTraffic('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Google Traffic prüfen">
+                                                        <i class="fab fa-google"></i> Google Traffic prüfen
+                                                    </button>
+                                                    <div id="google-traffic-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                                </div>
+                                                <div class="tab-pane fade" id="security-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="security-tab-<?php echo md5($website['url']); ?>">
+                                                    <button class="btn btn-primary mt-3" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Sicherheitsstatus prüfen">
+                                                        <i class="fas fa-shield-alt"></i> Sicherheitsstatus prüfen
+                                                    </button>
+                                                    <div id="security-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -89,7 +129,6 @@ if ($userLogged) {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
         <script>
             $(document).ready(function() {
                 $("#sortable-cards").sortable({
