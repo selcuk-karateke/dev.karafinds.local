@@ -1,5 +1,7 @@
 config.php
+config.json
 logs/
+vendor/
 backup/
 logs/dev.karafinds.local-error.log
 logs/dev.karafinds.local-access.log
