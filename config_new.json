@@ -1,0 +1,34 @@
+{
+    "websites": [
+        {
+            "name": "Karateke Webdesign",
+            "url": "https://karateke-webdesign.de",
+            "host": "w015a999.kasserver.com",
+            "port": "22",
+            "user": "ssh-w01e9880",
+            "pass": "",
+            "path": "/www/htdocs/w015a999/karateke-webdesign.de",
+            "user_ftp": "",
+            "pass_ftp": "",
+            "user_api": "AdminKarateke",
+            "pass_api": "WebKara24",
+            "type": "wordpress",
+            "spam_api": "d9dde23d1c26"
+        },
+        {
+            "name": "DEV",
+            "url": "https://dev.karafinds.com",
+            "host": "w01bcb0d.kasserver.com",
+            "port": "22",
+            "user": "ssh-w01bcb0d",
+            "pass": "",
+            "path": "/www/htdocs/w01bcb0d/dev.karafinds.com",
+            "user_ftp": "",
+            "pass_ftp": "",
+            "user_api": "",
+            "pass_api": "",
+            "type": "self",
+            "spam_api": ""
+        }
+    ]
+}
