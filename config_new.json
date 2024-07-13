@@ -8,10 +8,26 @@
             "user": "ssh-w01e9880",
             "pass": "",
             "path": "/www/htdocs/w015a999/karateke-webdesign.de",
-            "user_ftp": "",
-            "pass_ftp": "",
-            "user_api": "AdminKarateke",
-            "pass_api": "WebKara24",
+            "db": [
+                {
+                    "name": "local",
+                    "host": "localhost",
+                    "user": "root",
+                    "pass": ""
+                }
+            ],
+            "ftp": [
+                {
+                    "user": "",
+                    "pass": ""
+                }
+            ],
+            "api": [
+                {
+                    "user": "AdminKarateke",
+                    "pass": "WebKara24"
+                }
+            ],
             "type": "wordpress",
             "spam_api": "d9dde23d1c26"
         },
@@ -23,10 +39,26 @@
             "user": "ssh-w01bcb0d",
             "pass": "",
             "path": "/www/htdocs/w01bcb0d/dev.karafinds.com",
-            "user_ftp": "",
-            "pass_ftp": "",
-            "user_api": "",
-            "pass_api": "",
+            "db": [
+                {
+                    "name": "local",
+                    "host": "localhost",
+                    "user": "root",
+                    "pass": ""
+                }
+            ],
+            "ftp": [
+                {
+                    "user": "",
+                    "pass": ""
+                }
+            ],
+            "api": [
+                {
+                    "user": "",
+                    "pass": ""
+                }
+            ],
             "type": "self",
             "spam_api": ""
         }

@@ -4,6 +4,9 @@ $title = "Einfaches 2D-Spiel - Webdesign Karateke";
 $meta_description = "Game - Willkommen bei Webdesign Karateke";
 $additional_head_content_1 = '<link rel="stylesheet" href="game.css">';
 
+$configLoader = new Karatekes\ConfigLoader('config.json');
+$websites = $configLoader->getSection('websites');
+
 if (!isset($_SESSION['score'])) {
     $_SESSION['score'] = 0;
 }
@@ -14,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-$mysqli = new mysqli('localhost', USERNAME, PASSWORD, DATABASE);
+$mysqli = new mysqli('localhost', 'root', '', $websites[1]['db'][1]['name']);
 
 if ($mysqli->connect_error) {
     die('Connection Error: ' . $mysqli->connect_error);

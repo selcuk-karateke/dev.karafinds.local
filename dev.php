@@ -9,9 +9,9 @@ $additional_head_content_1 = '';
 $additional_head_content_2 = '<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>';
 include 'parts/head.php';
 
-// Lade die Konfiguration aus der externen JSON-Datei
-$config = json_decode(file_get_contents('config.json'), true);
-$websites = $config['websites'];
+$configLoader = new Karatekes\ConfigLoader('config.json');
+$websites = $configLoader->getSection('websites');
+
 if ($userLogged) {
 ?>
 
@@ -84,7 +84,7 @@ if ($userLogged) {
                                                     </button>
                                                 </div>
                                                 <div class="tab-pane fade" id="updates-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="updates-tab-<?php echo md5($website['url']); ?>">
-                                                    <button class="btn btn-primary mt-3" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['user_api']; ?>', '<?php echo $website['pass_api']; ?>', '<?php echo $website['type']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Updates prüfen">
+                                                    <button class="btn btn-primary mt-3" onclick="checkUpdates('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['api'][0]['user']; ?>', '<?php echo $website['api'][0]['pass']; ?>', '<?php echo $website['type']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Updates prüfen">
                                                         <i class="fas fa-sync-alt"></i> Updates prüfen
                                                     </button>
                                                     <div id="updates-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
