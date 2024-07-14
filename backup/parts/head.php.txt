@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<?php echo $meta_description; ?>">
+    <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title><?php echo $title; ?></title>
     <link rel="stylesheet" href="styles.css">
@@ -16,5 +17,16 @@
     <script>
         // Sofortiges Setzen des Dark Mode basierend auf localStorage oder Systemeinstellung
         (function() {})();
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-Y"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-XXXXX-Y');
     </script>
 </head>

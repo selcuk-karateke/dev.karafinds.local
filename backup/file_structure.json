@@ -1,32 +1,46 @@
 {
+    ".htaccess": "file",
     "assets": {
         "images": {
             "logo.png": "file"
         }
     },
     "auth": {
+        ".htpasswd": "file",
         "cacert.pem": "file",
+        "dev-karafinds-fa95634a602e.json": "file",
         "login.php": "file"
     },
     "bootstrap.php": "file",
     "check": {
         "availability.php": "file",
         "comment.php": "file",
+        "dbPerformance.php": "file",
         "loadtime.php": "file",
+        "logTraffic.php": "file",
         "security.php": "file",
         "seo.php": "file",
+        "serverInfo.php": "file",
+        "serverLoad.php": "file",
         "updates.php": "file"
     },
     "classes": {
         "AkismetMonitor.php": "file",
         "AvailabilityMonitor.php": "file",
+        "ConfigLoader.php": "file",
+        "DatabasePerformanceMonitor.php": "file",
         "LoadTimeMonitor.php": "file",
+        "LogTrafficMonitor.php": "file",
         "SecurityMonitor.php": "file",
         "SEOMonitor.php": "file",
+        "ServerLoadMonitor.php": "file",
         "UpdatesMonitor.php": "file"
     },
     "composer.json": "file",
     "composer.lock": "file",
+    "config.json": "file",
+    "config_new.json": "file",
+    "dev.php": "file",
     "fetch": {
         "comments.php": "file"
     },
@@ -34,6 +48,9 @@
     "game.css": "file",
     "game.js": "file",
     "game.php": "file",
+    "get": {
+        "googleTraffic.php": "file"
+    },
     "index copy.php": "file",
     "index.php": "file",
     "instagram.php": "file",
@@ -42,6 +59,7 @@
         "nav.php": "file"
     },
     "policies.php": "file",
+    "robots.txt": "file",
     "save_score.php": "file",
     "src": {
         "game": {

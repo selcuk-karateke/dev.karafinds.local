@@ -8,3 +8,15 @@ logs/dev.karafinds.local-access.log
 auth/dev-karafinds-fa95634a602e.json
 vendor/autoload.php
 vendor/composer/autoload_classmap.php
+vendor/autoload.php
+vendor/composer/autoload_classmap.php
+vendor/composer/autoload_psr4.php
+vendor/composer/autoload_real.php
+vendor/composer/autoload_static.php
+vendor/composer/ClassLoader.php
+vendor/composer/installed.json
+vendor/composer/installed.php
+vendor/composer/platform_check.php
+vendor/paragonie/constant_time_encoding/composer.json
+vendor/paragonie/constant_time_encoding/README.md
+vendor/paragonie/constant_time_encoding/src/Binary.php

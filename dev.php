@@ -11,6 +11,7 @@ include 'parts/head.php';
 
 $configLoader = new Karatekes\ConfigLoader('config.json');
 $websites = $configLoader->getSection('websites');
+$updateData = file_exists('check/update.json') ? json_decode(file_get_contents('update.json'), true) : null;
 
 if ($userLogged) {
 ?>
@@ -30,6 +31,10 @@ if ($userLogged) {
                         <h3>Überwachung</h3>
                         <div class="row" id="sortable-cards">
                             <?php foreach ($websites as $website) : ?>
+                                <?php
+                                $filename = 'C:\xampp\htdocs\dev.karafinds.local\check\updates-' . md5($website['url']) . '.json';
+                                $updateData = file_exists($filename) ? json_decode(file_get_contents($filename), true) : null;
+                                ?>
                                 <div class="col-md-6 sortable-card">
                                     <div class="card mb-4">
                                         <div class="card-header">
@@ -114,7 +119,7 @@ if ($userLogged) {
                                                     <button class="btn btn-primary mt-3" onclick="checkGoogleTraffic('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['prop_id']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Google Traffic prüfen">
                                                         <i class="fab fa-google"></i> Google Traffic prüfen
                                                     </button>
-                                                    <div id="google-traffic-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                                    <div id="google-traffic-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
                                                 </div>
                                                 <div class="tab-pane fade" id="security-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="security-tab-<?php echo md5($website['url']); ?>">
                                                     <button class="btn btn-primary mt-3" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Sicherheitsstatus prüfen">
@@ -166,9 +171,23 @@ if ($userLogged) {
                 element.innerHTML = '';
             }
 
+            function checkUpdates(url, urlHash, user_api, pass_api, type) {
+                var statusListId = 'updates-status-' + urlHash;
+                showSpinner(statusListId);
+                console.log(statusListId)
+                $.get('check/updates.php', {
+                    url: url,
+                    user_api: user_api,
+                    pass_api: pass_api,
+                    type: type
+                }, function(data) {
+                    hideSpinner(statusListId);
+                    $('#' + statusListId).html(data);
+                });
+            }
 
             function checkGoogleTraffic(url, urlHash, propertyId) {
-                var statusListId = 'google-traffic-' + urlHash;
+                var statusListId = 'google-traffic-status-' + urlHash;
                 showSpinner(statusListId);
                 console.log(statusListId)
                 $.get('get/googleTraffic.php', {
@@ -195,6 +214,8 @@ if ($userLogged) {
                     }
                 });
             }
+
+
 
             function checkAvailability(url, urlHash) {
                 // var statusListId = 'availability-status-' + urlHash;
@@ -257,21 +278,6 @@ if ($userLogged) {
                         // statusList.append('');
                         statusHeader.html('&nbsp' + icon + ' ' + time.toFixed(2) + 's ');
                     });
-                });
-            }
-
-            function checkUpdates(url, urlHash, user_api, pass_api, type) {
-                var statusListId = 'updates-status-' + urlHash;
-                showSpinner(statusListId);
-                console.log(statusListId)
-                $.get('check/updates.php', {
-                    url: url,
-                    user_api: user_api,
-                    pass_api: pass_api,
-                    type: type
-                }, function(data) {
-                    hideSpinner(statusListId);
-                    $('#' + statusListId).html(data);
                 });
             }
 
