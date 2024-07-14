@@ -1,6 +1,6 @@
 <?php
-// classes/GoogleTrafficMonitor.php
-class GoogleTrafficMonitor
+// classes/LogTrafficMonitor.php
+class LogTrafficMonitor
 {
     private $logFile;
 
@@ -9,15 +9,15 @@ class GoogleTrafficMonitor
         $this->logFile = $logFile;
     }
 
-    public function checkGoogleTraffic()
+    public function checkLogTraffic()
     {
-        $googleCount = 0;
+        $logCount = 0;
 
         if (file_exists($this->logFile)) {
             $file = fopen($this->logFile, 'r');
             while (($line = fgets($file)) !== false) {
                 if (strpos($line, 'google.com') !== false) {
-                    $googleCount++;
+                    $logCount++;
                 }
             }
             fclose($file);
@@ -25,6 +25,6 @@ class GoogleTrafficMonitor
             return "Log file not found.";
         }
 
-        return $googleCount;
+        return $logCount;
     }
 }

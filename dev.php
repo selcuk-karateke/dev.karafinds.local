@@ -60,6 +60,9 @@ if ($userLogged) {
                                                     <button class="nav-link" id="seo-tab-<?php echo md5($website['url']); ?>" data-bs-toggle="tab" data-bs-target="#seo-<?php echo md5($website['url']); ?>" type="button" role="tab" aria-controls="seo-<?php echo md5($website['url']); ?>" aria-selected="false"><i class="fas fa-search"></i></button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="log-traffic-tab-<?php echo md5($website['url']); ?>" data-bs-toggle="tab" data-bs-target="#log-traffic-<?php echo md5($website['url']); ?>" type="button" role="tab" aria-controls="log-traffic-<?php echo md5($website['url']); ?>" aria-selected="false"><i class='fas fa-traffic-light'></i></button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
                                                     <button class="nav-link" id="google-traffic-tab-<?php echo md5($website['url']); ?>" data-bs-toggle="tab" data-bs-target="#google-traffic-<?php echo md5($website['url']); ?>" type="button" role="tab" aria-controls="google-traffic-<?php echo md5($website['url']); ?>" aria-selected="false"><i class="fab fa-google"></i></button>
                                                 </li>
                                                 <li class="nav-item" role="presentation">
@@ -101,11 +104,17 @@ if ($userLogged) {
                                                     </button>
                                                     <div id="seo-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
                                                 </div>
+                                                <div class="tab-pane fade" id="log-traffic-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="log-traffic-tab-<?php echo md5($website['url']); ?>">
+                                                    <button class="btn btn-primary mt-3" onclick="checkLogTraffic('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Log Traffic prüfen">
+                                                        <i class='fas fa-traffic-light'></i> Log Traffic prüfen
+                                                    </button>
+                                                    <div id="log-traffic-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                                </div>
                                                 <div class="tab-pane fade" id="google-traffic-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="google-traffic-tab-<?php echo md5($website['url']); ?>">
-                                                    <button class="btn btn-primary mt-3" onclick="checkGoogleTraffic('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Google Traffic prüfen">
+                                                    <button class="btn btn-primary mt-3" onclick="checkGoogleTraffic('<?php echo $website['url']; ?>', '<?php echo md5($website['url']); ?>', '<?php echo $website['prop_id']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Google Traffic prüfen">
                                                         <i class="fab fa-google"></i> Google Traffic prüfen
                                                     </button>
-                                                    <div id="google-traffic-status-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
+                                                    <div id="google-traffic-<?php echo md5($website['url']); ?>" class="status-indicator mt-2"></div>
                                                 </div>
                                                 <div class="tab-pane fade" id="security-<?php echo md5($website['url']); ?>" role="tabpanel" aria-labelledby="security-tab-<?php echo md5($website['url']); ?>">
                                                     <button class="btn btn-primary mt-3" onclick="checkSecurity('<?php echo $website['url']; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>', '<?php echo $website['path']; ?>', '<?php echo md5($website['url']); ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Sicherheitsstatus prüfen">
@@ -155,6 +164,36 @@ if ($userLogged) {
             function hideSpinner(elementId) {
                 var element = document.getElementById(elementId);
                 element.innerHTML = '';
+            }
+
+
+            function checkGoogleTraffic(url, urlHash, propertyId) {
+                var statusListId = 'google-traffic-' + urlHash;
+                showSpinner(statusListId);
+                console.log(statusListId)
+                $.get('get/googleTraffic.php', {
+                    url: url,
+                    propertyId: propertyId
+                }, function(response) {
+                    hideSpinner(statusListId);
+                    try {
+                        var result = typeof response === 'string' ? JSON.parse(response) : response; // Parse JSON if necessary
+                        if (result.data && result.data.length > 0) {
+                            var output = '<table class="table"><thead><tr><th>Source/Medium</th><th>Campaign</th><th>Sessions</th></tr></thead><tbody>';
+                            result.data.forEach(function(row) {
+                                output += '<tr><td>' + row['dimension0'] + '</td><td>' + row['dimension1'] + '</td><td>' + row['metric0'] + '</td></tr>';
+                            });
+                            output += '</tbody></table>';
+                            $('#' + statusListId).html(output);
+                        } else if (result.error) {
+                            $('#' + statusListId).html('<p>Error: ' + result.message + '</p>');
+                        } else {
+                            $('#' + statusListId).html('<p>No data available for the selected period.</p>');
+                        }
+                    } catch (e) {
+                        $('#' + statusListId).html('<p>Error retrieving data.</p>');
+                    }
+                });
             }
 
             function checkAvailability(url, urlHash) {
@@ -224,6 +263,7 @@ if ($userLogged) {
             function checkUpdates(url, urlHash, user_api, pass_api, type) {
                 var statusListId = 'updates-status-' + urlHash;
                 showSpinner(statusListId);
+                console.log(statusListId)
                 $.get('check/updates.php', {
                     url: url,
                     user_api: user_api,
@@ -287,18 +327,6 @@ if ($userLogged) {
                 });
             }
 
-            function checkGoogleTraffic(url, urlHash) {
-                var statusListId = 'google-traffic-status-' + urlHash;
-                showSpinner(statusListId);
-                $.get('check/google_traffic.php', {
-                    url: url,
-                }, function(data) {
-                    hideSpinner(statusListId);
-                    var result = JSON.parse(data);
-                    $('#' + statusListId).html('Besucher von Google: ' + result.google_traffic);
-                });
-            }
-
             function checkSecurity(url, host, port, user, pass, path, urlHash) {
                 var statusListId = 'security-status-' + urlHash;
                 showSpinner(statusListId);
@@ -344,16 +372,15 @@ if ($userLogged) {
                 });
             }
 
-            function checkGoogleTraffic(url, host, port, user, pass, path, urlHash) {
-                $.get('check/googleTraffic.php', {
+            function checkLogTraffic(url, urlHash) {
+                var statusListId = 'log-traffic-status-' + urlHash;
+                showSpinner(statusListId);
+                $.get('check/logTraffic.php', {
                     url: url,
-                    host: host,
-                    port: port,
-                    user: user,
-                    pass: pass,
-                    path: path
                 }, function(data) {
-                    $('#google-traffic-status').text(data);
+                    hideSpinner(statusListId);
+                    var result = JSON.parse(data);
+                    $('#' + statusListId).html('Besucher von Google: ' + result.log_traffic);
                 });
             }
         </script>

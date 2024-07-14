@@ -5,3 +5,6 @@ vendor/
 backup/
 logs/dev.karafinds.local-error.log
 logs/dev.karafinds.local-access.log
+auth/dev-karafinds-fa95634a602e.json
+vendor/autoload.php
+vendor/composer/autoload_classmap.php
