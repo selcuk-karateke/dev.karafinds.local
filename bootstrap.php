@@ -9,6 +9,10 @@ error_reporting(-1);
 require_once 'config.php';
 require_once 'functions.php';
 require_once 'classes/ConfigLoader.php';
+require_once 'classes/Logger.php';  // Pfad zur Logger-Klasse anpassen
+use Karatekes\Logger;
+
+$logger = new Logger();
 
 if (!isset($_SESSION["logged"]) && !isset($_SESSION["username"])) {
 } elseif ((isset($_SESSION["logged"]) && $_SESSION["logged"] == "1" && isset($_SESSION["username"]))) {

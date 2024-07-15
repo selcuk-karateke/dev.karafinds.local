@@ -1,6 +1,5 @@
 config.php
 config.json
-logs/
 vendor/
 backup/
 logs/dev.karafinds.local-error.log
@@ -20,3 +19,4 @@ vendor/composer/platform_check.php
 vendor/paragonie/constant_time_encoding/composer.json
 vendor/paragonie/constant_time_encoding/README.md
 vendor/paragonie/constant_time_encoding/src/Binary.php
+logs/dev.karafinds.local-access.log
