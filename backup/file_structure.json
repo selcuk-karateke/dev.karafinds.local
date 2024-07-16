@@ -16,6 +16,7 @@
         "availability.php": "file",
         "comment.php": "file",
         "dbPerformance.php": "file",
+        "googleTraffic.php": "file",
         "loadtime.php": "file",
         "logTraffic.php": "file",
         "security.php": "file",
@@ -30,6 +31,7 @@
         "ConfigLoader.php": "file",
         "DatabasePerformanceMonitor.php": "file",
         "LoadTimeMonitor.php": "file",
+        "Logger.php": "file",
         "LogTrafficMonitor.php": "file",
         "SecurityMonitor.php": "file",
         "SEOMonitor.php": "file",
@@ -48,9 +50,6 @@
     "game.css": "file",
     "game.js": "file",
     "game.php": "file",
-    "get": {
-        "googleTraffic.php": "file"
-    },
     "index copy.php": "file",
     "index.php": "file",
     "instagram.php": "file",
