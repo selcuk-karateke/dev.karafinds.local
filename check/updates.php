@@ -23,9 +23,8 @@ if (isset($_GET['type']) && $_GET['type'] == 'wordpress') {
     }
 
     // // Debug-Ausgabe der rohen Daten
-    // echo '<pre>';
-    // print_r($updates);
-    // echo '</pre>';
+    // $jsonData = json_encode(['debug' => print_r($updates)]);
+    // echo $jsonData;
 
     $output = '<h5>Plugins:</h5><ul class="list-group mb-3">';
     if (!empty($updates['plugins'])) {
@@ -68,11 +67,11 @@ if (isset($_GET['type']) && $_GET['type'] == 'wordpress') {
         $output .= '<li class="list-group-item">Keine Themes gefunden.</li>';
     }
     $output .= '</ul>';
-
-    echo $output;
 } else {
-    echo '<p class="text-danger">Typ ist kein Wordpress: ' . htmlspecialchars($updates['error']) . '</p>';
+    $output = '<p class="text-danger">Typ ist kein Wordpress: ' . htmlspecialchars($updates['error']) . '</p>';
 }
+$jsonData = json_encode(['data' => $output]);
+echo $jsonData;
 /**
  * Placeholder-Funktion, um die neueste Version eines Plugins oder Themes abzurufen.
  */

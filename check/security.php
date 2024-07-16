@@ -10,7 +10,8 @@ $directory = $_GET['path'];
 try {
     $monitor = new Karatekes\SecurityMonitor($host, $username, $password, $directory, $port);
     $result = $monitor->malwareScan();
-    echo $result;
+    $jsonData = json_encode(['data' => $result]);
+    echo $jsonData;
 } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();
 }

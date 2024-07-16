@@ -77,7 +77,6 @@ if ($url && $propertyId) {
 
         header('Content-Type: application/json');
         $jsonData = json_encode(['data' => $data]); // Hinzufügen eines Wrappers zur Klarstellung
-
         echo $jsonData;
     } catch (Google_Service_Exception $e) {
         header('Content-Type: application/json');
