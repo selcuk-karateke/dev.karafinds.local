@@ -11,7 +11,6 @@ include 'parts/head.php';
 
 $configLoader = new Karatekes\ConfigLoader('config.json');
 $websites = $configLoader->getSection('websites');
-$updateData = file_exists('check/update.json') ? json_decode(file_get_contents('update.json'), true) : null;
 
 // $logger->log("Dies ist eine Info-Nachricht", 'info');
 // $logger->log("Dies ist eine Warnung", 'warning', true);

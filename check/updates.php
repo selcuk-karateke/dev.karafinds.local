@@ -9,6 +9,19 @@ $user_api = isset($_GET['user_api']) ? $_GET['user_api'] : null;
 $pass_api = isset($_GET['pass_api']) ? $_GET['pass_api'] : null;
 $type = isset($_GET['type']) ? $_GET['type'] : null;
 
+if (isset($argv[1]) && $argv[1]) {
+    $configLoader = new Karatekes\ConfigLoader('config.json');
+    $websites = $configLoader->getSection('websites');
+    foreach ($websites as $website) {
+
+        $monitor = new UpdatesMonitor($url, $user_api, $pass_api);
+        $updates = $monitor->getUpdates();
+        if (isset($updates['error'])) {
+            exit;
+        }
+    }
+}
+
 if (isset($_GET['type']) && $_GET['type'] == 'wordpress') {
     $url = $_GET['url'];
     // $cacertPath = __DIR__ . DIRECTORY_SEPARATOR . "auth" . DIRECTORY_SEPARATOR . "cacert.pem";
