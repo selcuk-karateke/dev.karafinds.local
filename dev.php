@@ -38,10 +38,14 @@ if ($userLogged) {
                                 $uniqueId = md5($website['url']); // Eindeutige ID für jedes Website-Element
                                 $filename = 'C:\xampp\htdocs\dev.karafinds.local\check\updates-' . $uniqueId . '.json';
                                 $updateData = file_exists($filename) ? json_decode(file_get_contents($filename), true) : null;
+                                $hasUpdates = isset($website['updates']) && $website['updates'] > 0;
                                 ?>
                                 <div class="col-md-6 sortable-card">
                                     <div class="card mb-4">
                                         <div class="card-header d-flex justify-content-between align-items-center">
+                                            <?php if ($hasUpdates) : ?>
+                                                <span class="badge bg-danger"><?php echo $website['updates']; ?></span>
+                                            <?php endif; ?>
                                             <a href="<?php echo htmlspecialchars($website['url']); ?>" <?php echo $nofollow; ?> target="_blank">
                                                 <i class="fas fa-globe"></i> <?php echo htmlspecialchars($website['name']); ?>
                                             </a>
@@ -64,7 +68,11 @@ if ($userLogged) {
                                                         <button class="nav-link" id="loadtime-tab-<?php echo $uniqueId; ?>" data-bs-toggle="tab" data-bs-target="#loadtime-<?php echo $uniqueId; ?>" type="button" role="tab" aria-controls="loadtime-<?php echo $uniqueId; ?>" aria-selected="false"><i class="fas fa-tachometer-alt"></i></button>
                                                     </li>
                                                     <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" id="updates-tab-<?php echo $uniqueId; ?>" data-bs-toggle="tab" data-bs-target="#updates-<?php echo $uniqueId; ?>" type="button" role="tab" aria-controls="updates-<?php echo $uniqueId; ?>" aria-selected="false"><i class="fas fa-sync-alt"></i></button>
+                                                        <button class="nav-link" id="updates-tab-<?php echo $uniqueId; ?>" data-bs-toggle="tab" data-bs-target="#updates-<?php echo $uniqueId; ?>" type="button" role="tab" aria-controls="updates-<?php echo $uniqueId; ?>" aria-selected="false"><i class="fas fa-sync-alt"></i>
+                                                            <?php if ($hasUpdates) : ?>
+                                                                <span class="badge bg-danger">!</span>
+                                                            <?php endif; ?>
+                                                        </button>
                                                     </li>
                                                     <li class="nav-item" role="presentation">
                                                         <button class="nav-link" id="comments-tab-<?php echo $uniqueId; ?>" data-bs-toggle="tab" data-bs-target="#comments-<?php echo $uniqueId; ?>" type="button" role="tab" aria-controls="comments-<?php echo $uniqueId; ?>" aria-selected="false"><i class="fas fa-comments"></i></button>

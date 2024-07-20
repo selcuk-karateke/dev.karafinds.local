@@ -3,6 +3,7 @@
         {
             "name": "Karateke Webdesign",
             "url": "https://karateke-webdesign.de",
+            "hash": "2ff18141ae3a2f6a8e7fdd57b40dc8a1",
             "host": "w015a999.kasserver.com",
             "port": "22",
             "user": "ssh-w01e9880",
@@ -28,12 +29,14 @@
                     "pass": "WebKara24"
                 }
             ],
+            "updates": 0,
             "type": "wordpress",
             "spam_api": "d9dde23d1c26"
         },
         {
             "name": "DEV",
             "url": "https://dev.karafinds.com",
+            "hash": "6c6b13635b34b6f5c9d3953f63f07b45",
             "host": "w01bcb0d.kasserver.com",
             "port": "22",
             "user": "ssh-w01bcb0d",
@@ -59,6 +62,7 @@
                     "pass": ""
                 }
             ],
+            "updates": 0,
             "type": "self",
             "spam_api": ""
         }

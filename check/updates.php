@@ -1,31 +1,77 @@
 <?php
-require_once '../classes/UpdatesMonitor.php';
-// Download the wordpress plugin into your plugins directory
+require_once(__DIR__ . '/../classes/UpdatesMonitor.php');
+require_once(__DIR__ . '/../classes/Logger.php');
+require_once(__DIR__ . '/../classes/ConfigLoader.php');
+
+// Download the WordPress plugin into your plugins directory
 // https://github.com/WP-API/Basic-Auth
 
-// URL aus den GET-Parametern holen
-$url = isset($_GET['url']) ? $_GET['url'] : null;
-$user_api = isset($_GET['user_api']) ? $_GET['user_api'] : null;
-$pass_api = isset($_GET['pass_api']) ? $_GET['pass_api'] : null;
-$type = isset($_GET['type']) ? $_GET['type'] : null;
+$logger = new Karatekes\Logger(__DIR__ . '/../logs/custom.log');
+$logger->log("Skript gestartet", 'info');
 
-if (isset($argv[1]) && $argv[1]) {
-    $configLoader = new Karatekes\ConfigLoader('config.json');
+// Erkenne, ob das Skript über CLI oder HTTP aufgerufen wird
+$cli = (php_sapi_name() === "cli");
+// Variable zum Speichern der Parameter, die entweder von CLI oder GET/POST kommen
+$params = [];
+if ($cli) {
+    // CLI Modus
+    parse_str(implode('&', array_slice($argv, 1)), $params);
+} else {
+    // HTTP Modus (GET oder POST)
+    $params = $_REQUEST; // $_REQUEST umfasst sowohl $_GET als auch $_POST
+}
+
+// Konfiguration laden
+try {
+    $configLoader = new Karatekes\ConfigLoader(__DIR__ . '/../config.json');
     $websites = $configLoader->getSection('websites');
-    foreach ($websites as $website) {
+} catch (Exception $e) {
+    $logger->log($e->getMessage(), 'error');
+    exit("Fehler beim Laden der Konfiguration: " . $e->getMessage());
+}
 
-        $monitor = new UpdatesMonitor($url, $user_api, $pass_api);
-        $updates = $monitor->getUpdates();
-        if (isset($updates['error'])) {
-            exit;
-        }
+function handleUpdateCheck($website, $logger, $configLoader)
+{
+    // Erstellt eine Instanz von UpdatesMonitor mit den erforderlichen Parametern.
+    $monitor = new UpdatesMonitor($website['url'], $website['api'][0]['user'], $website['api'][0]['pass']);
+
+    // Ruft Updates von der Monitor-Instanz ab.
+    $updates = $monitor->getUpdates();
+
+    // Überprüft, ob ein Fehler in den Updates vorhanden ist.
+    if (isset($updates['error'])) {
+        // Loggt den Fehler mit der entsprechenden URL und Fehlermeldung.
+        $logger->log("Fehler bei {$website['url']}: {$updates['error']}", 'error');
+        return false;  // Rückgabe von false, um die Ausführung fortzusetzen ohne zu beenden.
+    }
+
+    // Verarbeitet die Plugins, falls keine Fehler aufgetreten sind.
+    processPlugins($updates['plugins'], $website, $configLoader, $logger);
+
+    return true;  // Gibt true zurück, wenn alles erfolgreich war.
+}
+
+// Funktion zur Verarbeitung von Plugins
+function processPlugins($plugins, $website, $configLoader, $logger)
+{
+    foreach ($plugins as $plugin) {
+        // Verarbeitet jedes Plugin entsprechend
+        $logger->log("Verarbeite Plugin {$plugin['name']} für {$website['url']}", 'info');
+        // Hier kann zusätzliche Logik zur Plugin-Verarbeitung eingefügt werden
     }
 }
 
-if (isset($_GET['type']) && $_GET['type'] == 'wordpress') {
-    $url = $_GET['url'];
-    // $cacertPath = __DIR__ . DIRECTORY_SEPARATOR . "auth" . DIRECTORY_SEPARATOR . "cacert.pem";
-    $cacertPath = __DIR__ . '/../auth/cacert.pem';
+foreach ($websites as $website) {
+    if (!handleUpdateCheck($website, $logger, $configLoader)) {
+        continue;  // Fortsetzung mit der nächsten Website im Fehlerfall
+    }
+}
+
+if (!$cli && isset($_GET['type']) && $_GET['type'] == 'wordpress') {
+    // HTTP-Modus: Verarbeitet die Anfrage und gibt die Ergebnisse als HTML aus
+    $url = isset($_GET['url']) ? $_GET['url'] : null;
+    $user_api = isset($_GET['user_api']) ? $_GET['user_api'] : null;
+    $pass_api = isset($_GET['pass_api']) ? $_GET['pass_api'] : null;
 
     $monitor = new UpdatesMonitor($url, $user_api, $pass_api);
     $updates = $monitor->getUpdates();
@@ -34,10 +80,6 @@ if (isset($_GET['type']) && $_GET['type'] == 'wordpress') {
         echo '<p class="text-danger">Fehler beim Abrufen der Updates: ' . htmlspecialchars($updates['error']) . '</p>';
         exit;
     }
-
-    // // Debug-Ausgabe der rohen Daten
-    // $jsonData = json_encode(['debug' => print_r($updates)]);
-    // echo $jsonData;
 
     $output = '<h5>Plugins:</h5><ul class="list-group mb-3">';
     if (!empty($updates['plugins'])) {
@@ -80,11 +122,46 @@ if (isset($_GET['type']) && $_GET['type'] == 'wordpress') {
         $output .= '<li class="list-group-item">Keine Themes gefunden.</li>';
     }
     $output .= '</ul>';
-} else {
-    $output = '<p class="text-danger">Typ ist kein Wordpress: ' . htmlspecialchars($updates['error']) . '</p>';
+
+    $jsonData = json_encode(['data' => $output]);
+    echo $jsonData;
+} elseif ($cli) {
+    // CLI-Modus: Verarbeitet die Konfiguration und aktualisiert config.json
+    foreach ($websites as $website) {
+        $monitor = new UpdatesMonitor($website['url'], $website['api'][0]['user'], $website['api'][0]['pass']);
+        $updates = $monitor->getUpdates();
+        $hash = md5($website['url']);
+        $configLoader->updateConfigByHash($hash, 'updates', 0);  // Setzt den Zähler zurück
+
+        if (isset($updates['error'])) {
+            $logger->log("Fehler bei {$website['url']}: {$updates['error']}", 'error');
+            continue;
+        }
+
+        // Prüfe auf verfügbare Updates bei Plugins
+        if (!empty($updates['plugins'])) {
+            $updatesCount = 0;  // Korrigiert: Holt den aktuellen Zählerwert
+            foreach ($updates['plugins'] as $plugin) {
+                if (is_array($plugin) && isset($plugin['name']) && is_string($plugin['name'])) {
+                    $pluginName = htmlspecialchars($plugin['name']);
+                    $currentVersion = htmlspecialchars($plugin['version']);
+                    $slug = strtolower(explode('/', $plugin['plugin'])[0]);
+                    $latestVersion = get_latest_version('plugin', $slug);
+                    $pluginStatus = version_compare($currentVersion, $latestVersion, '<') ? 'Update verfügbar' : 'Aktuell';
+
+                    if ($pluginStatus === 'Update verfügbar') {
+                        $updatesCount++;  // Inkrementiert den Zähler
+                        $updated = $configLoader->updateConfigByHash($hash, 'updates', $updatesCount);  // Aktualisiert den Zählerwert
+                        if ($updated) {
+                            $logger->log("Update-Status für die Website '{$website['url']}' wurde auf {$updatesCount} gesetzt.", 'info');
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
-$jsonData = json_encode(['data' => $output]);
-echo $jsonData;
+
 /**
  * Placeholder-Funktion, um die neueste Version eines Plugins oder Themes abzurufen.
  */
