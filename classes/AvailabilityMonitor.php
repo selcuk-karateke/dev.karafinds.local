@@ -36,11 +36,11 @@ class AvailabilityMonitor
 
             switch ($statusCode) {
                 case 200:
-                    return "Seite ist erreichbar";
+                    return "UP";
                 case 403:
-                    return "Seite ist nicht erreichbar (Statuscode: 403 - Forbidden)";
+                    return "DOWN (Statuscode: 403 - Forbidden)";
                 default:
-                    return "Seite ist nicht erreichbar (Statuscode: $statusCode)";
+                    return "DOWN ist nicht erreichbar (Statuscode: $statusCode)";
             }
         }
     }

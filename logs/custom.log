@@ -1,190 +1,3 @@
-[2024-07-15 21:46:43] [info] Dies ist eine Info-Nachricht
-[2024-07-15 21:46:43] [warning] Dies ist eine Warnung
-[2024-07-15 21:46:43] [error] Dies ist ein Fehler
-[2024-07-15 21:46:54] [info] Dies ist eine Info-Nachricht
-[2024-07-15 21:46:54] [warning] Dies ist eine Warnung
-[2024-07-15 21:46:54] [error] Dies ist ein Fehler
-[2024-07-20 13:04:51] [info] X
-[2024-07-20 13:10:53] [info] Script gestartet
-[2024-07-20 13:11:47] [info] X
-[2024-07-20 13:45:15] [info] Skript gestartet
-[2024-07-20 13:46:55] [info] Skript gestartet
-[2024-07-20 13:48:48] [info] Skript gestartet
-[2024-07-20 13:48:49] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin Antispam Bee für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin Application Passwords für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin JSON Basic Authentication für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin Site Kit von Google für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin Smush für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin Wordfence Login Security für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin Wordfence Security für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin WPCode Lite für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin WPForms Lite für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
-[2024-07-20 13:48:49] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 13:50:12] [info] Skript gestartet
-[2024-07-20 13:50:13] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin Antispam Bee für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin Application Passwords für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin JSON Basic Authentication für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin Site Kit von Google für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin Smush für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin Wordfence Login Security für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin Wordfence Security für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin WPCode Lite für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin WPForms Lite für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
-[2024-07-20 13:50:13] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 13:52:35] [info] Skript gestartet
-[2024-07-20 13:52:36] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin Antispam Bee für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin Application Passwords für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin JSON Basic Authentication für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin Site Kit von Google für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin Smush für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin Wordfence Login Security für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin Wordfence Security für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin WPCode Lite für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin WPForms Lite für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
-[2024-07-20 13:52:36] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 13:52:55] [info] Skript gestartet
-[2024-07-20 13:52:56] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin Antispam Bee für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin Application Passwords für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin JSON Basic Authentication für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin Site Kit von Google für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin Smush für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin Wordfence Login Security für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin Wordfence Security für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin WPCode Lite für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin WPForms Lite für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
-[2024-07-20 13:52:56] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 13:52:56] [info] CLI-Modus: Es wurden keine Updates geprüft, da keine spezifische URL angegeben wurde.
-[2024-07-20 13:58:22] [info] Skript gestartet
-[2024-07-20 13:58:23] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin Antispam Bee für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin Application Passwords für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin JSON Basic Authentication für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin Site Kit von Google für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin Smush für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin Wordfence Login Security für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin Wordfence Security für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin WPCode Lite für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin WPForms Lite für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
-[2024-07-20 13:58:23] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 13:58:25] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 13:58:26] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 13:58:30] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 13:58:31] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 13:58:32] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 13:58:34] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 13:58:35] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 13:58:36] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 13:58:37] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 13:58:37] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 14:05:15] [info] Skript gestartet
-[2024-07-20 14:05:16] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin Antispam Bee für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin Application Passwords für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin JSON Basic Authentication für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin Site Kit von Google für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin Smush für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin Wordfence Login Security für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin Wordfence Security für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin WPCode Lite für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin WPForms Lite für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
-[2024-07-20 14:05:16] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 14:05:17] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:05:19] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:05:23] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:05:25] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:05:26] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:05:28] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:05:30] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:05:31] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:05:32] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:05:32] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 14:15:46] [info] Skript gestartet
-[2024-07-20 14:15:47] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin Antispam Bee für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin Application Passwords für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin JSON Basic Authentication für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin Site Kit von Google für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin Smush für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin Wordfence Login Security für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin Wordfence Security für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin WPCode Lite für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin WPForms Lite für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
-[2024-07-20 14:15:47] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
-[2024-07-20 14:15:48] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 14:15:49] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:15:51] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:15:55] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:15:56] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:15:57] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:16:01] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:16:02] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:16:03] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:16:05] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf true gesetzt.
-[2024-07-20 14:16:05] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 14:28:12] [info] Skript gestartet
-[2024-07-20 14:28:13] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin Antispam Bee für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin Application Passwords für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin JSON Basic Authentication für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin Site Kit von Google für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin Smush für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin Wordfence Login Security für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin Wordfence Security für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin WPCode Lite für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin WPForms Lite für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
-[2024-07-20 14:28:13] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 14:28:15] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 1 gesetzt.
-[2024-07-20 14:28:16] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 1 gesetzt.
-[2024-07-20 14:28:20] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 1 gesetzt.
-[2024-07-20 14:28:22] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 1 gesetzt.
-[2024-07-20 14:28:23] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 1 gesetzt.
-[2024-07-20 14:28:26] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 1 gesetzt.
-[2024-07-20 14:28:27] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 1 gesetzt.
-[2024-07-20 14:28:28] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 1 gesetzt.
-[2024-07-20 14:28:29] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 1 gesetzt.
-[2024-07-20 14:28:30] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
-[2024-07-20 14:35:35] [info] Skript gestartet
-[2024-07-20 14:35:35] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin Antispam Bee für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin Application Passwords für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin JSON Basic Authentication für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin Site Kit von Google für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin Smush für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin Wordfence Login Security für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin Wordfence Security für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin WPCode Lite für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin WPForms Lite für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
-[2024-07-20 14:35:35] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
-[2024-07-20 14:35:36] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
 [2024-07-20 14:36:25] [info] Skript gestartet
 [2024-07-20 14:36:26] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
 [2024-07-20 14:36:26] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
@@ -365,3 +178,43 @@
 [2024-07-20 14:50:06] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
 [2024-07-20 14:50:06] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
 [2024-07-20 14:50:06] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
+[2024-07-21 00:57:06] [info] Skript gestartet
+[2024-07-21 00:57:08] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin Antispam Bee für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin Application Passwords für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin JSON Basic Authentication für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin Site Kit von Google für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin Smush für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin Wordfence Login Security für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin Wordfence Security für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin WPCode Lite für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin WPForms Lite für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
+[2024-07-21 00:57:08] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
+[2024-07-21 19:46:31] [info] Skript gestartet
+[2024-07-21 19:46:33] [info] Verarbeite Plugin Akismet Anti-spam: Spam Protection für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin All in One SEO für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin Antispam Bee für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin Application Passwords für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin JSON Basic Authentication für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin Site Kit von Google für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin Smush für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin Wordfence Login Security für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin Wordfence Security für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin WPCode Lite für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin WPForms Lite für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin WP Mail SMTP für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [info] Verarbeite Plugin WPvivid Backup Plugin für https://karateke-webdesign.de
+[2024-07-21 19:46:33] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response
+[2024-07-21 19:46:34] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 1 gesetzt.
+[2024-07-21 19:46:35] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 2 gesetzt.
+[2024-07-21 19:46:39] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 3 gesetzt.
+[2024-07-21 19:46:40] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 4 gesetzt.
+[2024-07-21 19:46:41] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 5 gesetzt.
+[2024-07-21 19:46:43] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 6 gesetzt.
+[2024-07-21 19:46:45] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 7 gesetzt.
+[2024-07-21 19:46:46] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 8 gesetzt.
+[2024-07-21 19:46:47] [info] Update-Status für die Website 'https://karateke-webdesign.de' wurde auf 9 gesetzt.
+[2024-07-21 19:46:47] [error] Fehler bei https://dev.karafinds.com: Failed to fetch plugin updates: Invalid JSON response

@@ -39,27 +39,34 @@ if ($userLogged) {
                                 $filename = 'C:\xampp\htdocs\dev.karafinds.local\check\updates-' . $uniqueId . '.json';
                                 $updateData = file_exists($filename) ? json_decode(file_get_contents($filename), true) : null;
                                 $hasUpdates = isset($website['updates']) && $website['updates'] > 0;
+                                $parsedUrl = parse_url($website['url'], PHP_URL_HOST);
+                                $host = $parsedUrl ? $parsedUrl : $website['url'];
+                                $ipAddress = filter_var($host, FILTER_VALIDATE_IP) ? $host : gethostbyname($host);
                                 ?>
                                 <div class="col-md-6 sortable-card">
                                     <div class="card mb-4">
                                         <div class="card-header d-flex justify-content-between align-items-center">
-                                            <?php if ($hasUpdates) : ?>
-                                                <span class="badge bg-danger"><?php echo $website['updates']; ?></span>
-                                            <?php endif; ?>
                                             <a href="<?php echo htmlspecialchars($website['url']); ?>" <?php echo $nofollow; ?> target="_blank">
                                                 <i class="fas fa-globe"></i> <?php echo htmlspecialchars($website['name']); ?>
                                             </a>
+                                            <?php if ($hasUpdates) : ?>
+                                                <span class="badge bg-danger">!</span>
+                                            <?php endif; ?>
                                             <span class="float-end" id="availability-status-header-<?php echo $uniqueId; ?>"> </span>
                                             <span class="float-end" id="loadtime-status-header-<?php echo $uniqueId; ?>"></span>
-                                            <button class="btn btn-primary toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#cardContent-<?php echo $uniqueId; ?>" aria-expanded="false" aria-controls="cardContent-<?php echo $uniqueId; ?>">
+                                            <button class="btn toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#cardContent-<?php echo $uniqueId; ?>" aria-expanded="false" aria-controls="cardContent-<?php echo $uniqueId; ?>">
                                                 <i class="fas fa-chevron-up"></i>
                                             </button>
                                         </div>
                                         <div id="cardContent-<?php echo $uniqueId; ?>" class="collapse">
                                             <div class="card-body">
+                                                <p><?php echo $host; ?> (<?php echo $ipAddress; ?>)</p>
                                                 <ul class="nav nav-tabs" id="myTab-<?php echo $uniqueId; ?>" role="tablist">
                                                     <li class="nav-item" role="presentation">
-                                                        <button class="nav-link active" id="server-load-tab-<?php echo $uniqueId; ?>" data-bs-toggle="tab" data-bs-target="#server-load-<?php echo $uniqueId; ?>" type="button" role="tab" aria-controls="server-load-<?php echo $uniqueId; ?>" aria-selected="true"><i class="fas fa-server"></i></button>
+                                                        <button class="nav-link active" id="server-info-tab-<?php echo $uniqueId; ?>" data-bs-toggle="tab" data-bs-target="#server-info-<?php echo $uniqueId; ?>" type="button" role="tab" aria-controls="server-info-<?php echo $uniqueId; ?>" aria-selected="true"><i class="fas fa-info-circle"></i></button>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link" id="server-load-tab-<?php echo $uniqueId; ?>" data-bs-toggle="tab" data-bs-target="#server-load-<?php echo $uniqueId; ?>" type="button" role="tab" aria-controls="server-load-<?php echo $uniqueId; ?>" aria-selected="false"><i class="fas fa-server"></i></button>
                                                     </li>
                                                     <li class="nav-item" role="presentation">
                                                         <button class="nav-link" id="availability-tab-<?php echo $uniqueId; ?>" data-bs-toggle="tab" data-bs-target="#availability-<?php echo $uniqueId; ?>" type="button" role="tab" aria-controls="availability-<?php echo $uniqueId; ?>" aria-selected="false"><i class="fas fa-globe"></i></button>
@@ -70,7 +77,7 @@ if ($userLogged) {
                                                     <li class="nav-item" role="presentation">
                                                         <button class="nav-link" id="updates-tab-<?php echo $uniqueId; ?>" data-bs-toggle="tab" data-bs-target="#updates-<?php echo $uniqueId; ?>" type="button" role="tab" aria-controls="updates-<?php echo $uniqueId; ?>" aria-selected="false"><i class="fas fa-sync-alt"></i>
                                                             <?php if ($hasUpdates) : ?>
-                                                                <span class="badge bg-danger">!</span>
+                                                                <span class="badge bg-danger"><?php echo $website['updates']; ?></span>
                                                             <?php endif; ?>
                                                         </button>
                                                     </li>
@@ -91,7 +98,13 @@ if ($userLogged) {
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content" id="myTabContent-<?php echo $uniqueId; ?>">
-                                                    <div class="tab-pane fade show active" id="server-load-<?php echo $uniqueId; ?>" role="tabpanel" aria-labelledby="server-load-tab-<?php echo $uniqueId; ?>">
+                                                    <div class="tab-pane fade show active" id="server-info-<?php echo $uniqueId; ?>" role="tabpanel" aria-labelledby="server-info-tab-<?php echo $uniqueId; ?>">
+                                                        <button class="btn btn-info mt-3" onclick="showServerInfo('<?php echo $website['url']; ?>', '<?php echo $uniqueId; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Server Info prüfen">
+                                                            <i class="fas fa-info-circle"></i> Server Info prüfen
+                                                        </button>
+                                                        <div id="server-info-<?php echo $uniqueId; ?>" class="status-indicator mt-2"></div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="server-load-<?php echo $uniqueId; ?>" role="tabpanel" aria-labelledby="server-load-tab-<?php echo $uniqueId; ?>">
                                                         <button class="btn btn-primary mt-3" onclick="checkServerLoad('<?php echo $website['url']; ?>', '<?php echo $uniqueId; ?>', '<?php echo $website['host']; ?>', '<?php echo $website['port']; ?>', '<?php echo $website['user']; ?>', '<?php echo $website['pass']; ?>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Serverauslastung prüfen (lokal)">
                                                             <i class="fas fa-server"></i> Serverauslastung prüfen
                                                         </button>
@@ -157,6 +170,25 @@ if ($userLogged) {
         <footer class="text-center mt-4">
             &copy; 2023 Webdesign Karateke - Alle Rechte vorbehalten.
         </footer>
+        <!-- Modal HTML -->
+        <div class="modal fade" id="serverInfoModal" tabindex="-1" aria-labelledby="serverInfoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="serverInfoModalLabel">Server Information</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Server Information Content Here -->
+                        <div id="server-info-content"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -201,19 +233,52 @@ if ($userLogged) {
                 element.innerHTML = '';
             }
 
+            function showServerInfo(url, urlHash) {
+                var modal = new bootstrap.Modal(document.getElementById('serverInfoModal'));
+                var content = document.getElementById('server-info-content');
+                content.innerHTML = ''; // Inhalt löschen
+                showSpinner('server-info-content'); // Spinner anzeigen
+
+                $.get('fetch/serverInfo.php', {
+                    url: url
+                }, function(response) {
+                    hideSpinner('server-info-content');
+                    try {
+                        var result = typeof response === 'string' ? JSON.parse(response) : response;
+                        content.innerHTML = `
+                    <p><strong>IP Address:</strong> ${result['Server IP']}</p>
+                    <p><strong>FCGI:</strong> ${result['FCGI']}</p>
+                    <p><strong>Max Execution Time:</strong> ${result['Max Execution Time']}</p>
+                    <p><strong>PHP Version:</strong> ${result['PHP Version']}</p>
+                    <p><strong>DB Version:</strong> ${result['DB Version']}</p>
+                    <p><strong>Safe Mode:</strong> ${result['Safe Mode']}</p>
+                    <p><strong>Memory Limit:</strong> ${result['Memory Limit']}</p>
+                    <p><strong>Memory Get Usage:</strong> ${result['Memory Get Usage']}</p>
+                    <p><strong>Memory Peak Usage:</strong> ${result['Memory Peak Usage']}</p>
+                    <p><strong>PDO Enabled:</strong> ${result['PDO Enabled']}</p>
+                    <p><strong>Curl Enabled:</strong> ${result['Curl Enabled']}</p>
+                    <p><strong>Zlib Enabled:</strong> ${result['Zlib Enabled']}</p>
+                    <p><strong>Is Multisite:</strong> ${result['Is Multisite']}</p>
+                `;
+                    } catch (e) {
+                        content.innerHTML = '<p>Error retrieving data.</p>';
+                    }
+                    modal.show(); // Modal anzeigen
+                });
+            }
+
             function checkUpdates(url, urlHash, user_api, pass_api, type) {
                 var statusListId = 'updates-status-' + urlHash;
                 showSpinner(statusListId);
-                console.log(statusListId)
                 $.get('check/updates.php', {
                     url: url,
                     user_api: user_api,
                     pass_api: pass_api,
                     type: type
                 }, function(response) {
+                    hideSpinner(statusListId);
                     try {
                         var result = typeof response === 'string' ? JSON.parse(response) : response; // Parse JSON if necessary
-                        hideSpinner(statusListId);
                         $('#' + statusListId).html(result.data);
                     } catch (e) {
                         $('#' + statusListId).html('<p>Error retrieving data.</p>');
@@ -269,21 +334,21 @@ if ($userLogged) {
                         $.each(result, function(url, status) {
                             var icon;
                             var headerText;
-                            if (status.includes("Seite ist erreichbar")) {
+                            if (status.includes("UP")) {
                                 icon = '<i class="fas fa-check-circle text-success"></i>';
-                                headerText = icon + ' Erreichbar';
+                                headerText = icon + ' UP';
                             } else if (status.includes("403")) {
                                 icon = '<i class="fas fa-times-circle text-warning"></i>'; // Gelb für Forbidden
-                                headerText = icon + ' Forbidden';
+                                headerText = icon + ' 403';
                             } else {
                                 icon = '<i class="fas fa-times-circle text-danger"></i>'; // Rot für andere Fehler
-                                headerText = icon + ' Nicht erreichbar';
+                                headerText = icon + ' DOWN';
                             }
                             // statusList.append('');
                             statusHeader.html('&nbsp' + icon + ' ' + status);
                         });
                     } catch (e) {
-                        $('#' + statusListId).html('<p>Error retrieving data.</p>');
+                        $('#' + statusHeaderId).html('<p>Error retrieving data.</p>');
                     }
                 });
             }
@@ -300,7 +365,7 @@ if ($userLogged) {
                         var result = typeof response === 'string' ? JSON.parse(response) : response;
                         // hideSpinner(statusListId);
                         hideSpinner(statusHeaderId);
-                        // var statusList = $('#' + statusListId);
+                        // var statusList = $('#' + statusHeaderId);
                         var statusHeader = $('#' + statusHeaderId);
                         // statusList.empty();
                         statusHeader.empty();
@@ -317,7 +382,7 @@ if ($userLogged) {
                             statusHeader.html('&nbsp' + icon + ' ' + time.toFixed(2) + 's ');
                         });
                     } catch (e) {
-                        $('#' + statusListId).html('<p>Error retrieving data.</p>');
+                        $('#' + statusHeaderId).html('<p>Error retrieving data.</p>');
                     }
                 });
             }
