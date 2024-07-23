@@ -1,37 +1,43 @@
 <?php
-// Beispielhaftes PHP-Skript, das Serverinformationen zurückgibt
 header('Content-Type: application/json');
 
-// Funktion zum Abrufen der Systeminformationen
-function getSystemInfo()
+require '../vendor/autoload.php';
+
+use phpseclib3\Net\SSH2;
+
+function getSystemInfo($host, $port, $user, $pass)
 {
-    // Direkt abrufen, anstatt von phpinfo() zu extrahieren
-    $fcgi = (strpos(php_sapi_name(), 'cgi') !== false) ? 'On' : 'Off';
-    $max_execution_time = ini_get('max_execution_time');
-    $php_version = phpversion();
-    $db_version = defined('PDO::ATTR_CLIENT_VERSION') ? PDO::ATTR_CLIENT_VERSION : 'Unknown';
-    $safe_mode = ini_get('safe_mode') ? 'On' : 'Off';
-    $memory_limit = ini_get('memory_limit');
-    $memory_usage = memory_get_usage(true) / 1024 / 1024 . ' MB';
-    $memory_peak_usage = memory_get_peak_usage(true) / 1024 / 1024 . ' MB';
-    $pdo_enabled = extension_loaded('PDO') ? 'enabled' : 'disabled';
-    $curl_enabled = extension_loaded('curl') ? 'enabled' : 'disabled';
-    $zlib_enabled = extension_loaded('zlib') ? 'enabled' : 'disabled';
-    $is_multisite = '0'; // Da es sich nicht um eine WordPress-Umgebung handelt, setzen wir dies auf '0'
-    $server_ip = gethostbyname(gethostname());
+    $ssh = new SSH2($host, $port);
+    if (!$ssh->login($user, $pass)) {
+        return ['error' => 'Login failed'];
+    }
+
+    $fcgi = $ssh->exec("php -r 'echo (strpos(php_sapi_name(), \"cgi\") !== false) ? \"On\" : \"Off\";'");
+    $max_execution_time = $ssh->exec("php -r 'echo ini_get(\"max_execution_time\");'");
+    $php_version = $ssh->exec("php -r 'echo phpversion();'");
+    $db_version = $ssh->exec("php -r 'echo defined(\"PDO::ATTR_CLIENT_VERSION\") ? PDO::ATTR_CLIENT_VERSION : \"Unknown\";'");
+    $safe_mode = $ssh->exec("php -r 'echo ini_get(\"safe_mode\") ? \"On\" : \"Off\";'");
+    $memory_limit = $ssh->exec("php -r 'echo ini_get(\"memory_limit\");'");
+    $memory_usage = $ssh->exec("php -r 'echo memory_get_usage(true) / 1024 / 1024 . \" MB\";'");
+    $memory_peak_usage = $ssh->exec("php -r 'echo memory_get_peak_usage(true) / 1024 / 1024 . \" MB\";'");
+    $pdo_enabled = $ssh->exec("php -r 'echo extension_loaded(\"PDO\") ? \"enabled\" : \"disabled\";'");
+    $curl_enabled = $ssh->exec("php -r 'echo extension_loaded(\"curl\") ? \"enabled\" : \"disabled\";'");
+    $zlib_enabled = $ssh->exec("php -r 'echo extension_loaded(\"zlib\") ? \"enabled\" : \"disabled\";'");
+    $is_multisite = '0';
+    $server_ip = $host;
 
     return [
-        'FCGI' => $fcgi,
-        'Max Execution Time' => $max_execution_time,
-        'PHP Version' => $php_version,
-        'DB Version' => $db_version,
-        'Safe Mode' => $safe_mode,
-        'Memory Limit' => $memory_limit,
-        'Memory Get Usage' => $memory_usage,
-        'Memory Peak Usage' => $memory_peak_usage,
-        'PDO Enabled' => $pdo_enabled,
-        'Curl Enabled' => $curl_enabled,
-        'Zlib Enabled' => $zlib_enabled,
+        'FCGI' => trim($fcgi),
+        'Max Execution Time' => trim($max_execution_time),
+        'PHP Version' => trim($php_version),
+        'DB Version' => trim($db_version),
+        'Safe Mode' => trim($safe_mode),
+        'Memory Limit' => trim($memory_limit),
+        'Memory Get Usage' => trim($memory_usage),
+        'Memory Peak Usage' => trim($memory_peak_usage),
+        'PDO Enabled' => trim($pdo_enabled),
+        'Curl Enabled' => trim($curl_enabled),
+        'Zlib Enabled' => trim($zlib_enabled),
         'Is Multisite' => $is_multisite,
         'Server IP' => $server_ip
     ];
@@ -86,6 +92,13 @@ function saveDirectoryAsText($sourceDir, $targetDir, &$fileStructure, $currentPa
     }
 }
 
-// Beispielhafte Verwendung der Funktion getSystemInfo
-$systemInfo = getSystemInfo();
-echo json_encode($systemInfo);
+if (isset($_GET['host']) && isset($_GET['port']) && isset($_GET['user']) && isset($_GET['pass'])) {
+    $host = $_GET['host'];
+    $port = $_GET['port'];
+    $user = $_GET['user'];
+    $pass = $_GET['pass'];
+    $systemInfo = getSystemInfo($host, $port, $user, $pass);
+    echo json_encode($systemInfo);
+} else {
+    echo json_encode(['error' => 'Missing parameters']);
+}

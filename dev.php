@@ -98,9 +98,10 @@ if ($userLogged) {
                                                 </ul>
                                                 <div class="tab-content" id="myTabContent-<?php echo $uniqueId; ?>">
                                                     <div class="tab-pane fade show active" id="server-info-<?php echo $uniqueId; ?>" role="tabpanel" aria-labelledby="server-info-tab-<?php echo $uniqueId; ?>">
-                                                        <button class="btn btn-info mt-3 server-info-btn" data-url="<?php echo $website['url']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Server Info prüfen">
+                                                        <button class="btn btn-info mt-3 server-info-btn" data-url="<?php echo $website['url']; ?>" data-host="<?php echo $website['host']; ?>" data-port="<?php echo $website['port']; ?>" data-user="<?php echo $website['user']; ?>" data-pass="<?php echo $website['pass']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Server Info prüfen">
                                                             <i class="fas fa-info-circle"></i> Server Info prüfen
                                                         </button>
+
                                                         <div id="server-info-<?php echo $uniqueId; ?>" class="status-indicator mt-2"></div>
                                                     </div>
                                                     <div class="tab-pane fade" id="server-load-<?php echo $uniqueId; ?>" role="tabpanel" aria-labelledby="server-load-tab-<?php echo $uniqueId; ?>">

@@ -13,7 +13,7 @@ if ($url && $propertyId) {
     {
         $KEY_FILE_LOCATION = '../auth/dev-karafinds-fa95634a602e.json'; // Pfad zur JSON-Schlüsseldatei
 
-        $client = new Google_Client();
+        $client = new Google\Client();
         $client->setApplicationName("Google Analytics Reporting");
         $client->setAuthConfig($KEY_FILE_LOCATION);
         $client->setScopes(['https://www.googleapis.com/auth/analytics.readonly']);

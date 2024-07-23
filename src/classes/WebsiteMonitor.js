@@ -1,3 +1,4 @@
+// WebsiteMonitor.js
 class WebsiteMonitor {
     constructor(websites) {
         this.websites = websites;
@@ -55,7 +56,11 @@ class WebsiteMonitor {
         document.querySelectorAll('.server-info-btn').forEach(button => {
             button.addEventListener('click', () => {
                 var url = button.getAttribute('data-url');
-                self.showServerInfo(url);
+                var host = button.getAttribute('data-host');
+                var port = button.getAttribute('data-port');
+                var user = button.getAttribute('data-user');
+                var pass = button.getAttribute('data-pass');
+                this.showServerInfo(url, host, port, user, pass);
             });
         });
 
@@ -156,14 +161,18 @@ class WebsiteMonitor {
         element.innerHTML = '';
     }
 
-    showServerInfo(url) {
+    showServerInfo(url, host, port, user, pass) {
         var modal = new bootstrap.Modal(document.getElementById('serverInfoModal'));
         var content = document.getElementById('server-info-content');
         content.innerHTML = ''; // Inhalt löschen
         this.showSpinner('server-info-content'); // Spinner anzeigen
 
         $.get('fetch/serverInfo.php', {
-            url: url
+            url: url,
+            host: host,
+            port: port,
+            user: user,
+            pass: pass
         }, (response) => {
             this.hideSpinner('server-info-content');
             try {

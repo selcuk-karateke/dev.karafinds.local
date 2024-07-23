@@ -20,3 +20,4 @@ vendor/paragonie/constant_time_encoding/composer.json
 vendor/paragonie/constant_time_encoding/README.md
 vendor/paragonie/constant_time_encoding/src/Binary.php
 logs/dev.karafinds.local-access.log
+backup/file_structure.json
