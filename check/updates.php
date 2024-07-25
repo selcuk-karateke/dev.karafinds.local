@@ -21,10 +21,13 @@ if ($cli) {
     $params = $_REQUEST; // $_REQUEST umfasst sowohl $_GET als auch $_POST
 }
 
+// Verbindung zur Datenbank herstellen
+$pdo = new PDO('mysql:host=localhost;dbname=db_main', 'root', '');
+
 // Konfiguration laden
 try {
-    $configLoader = new Karatekes\ConfigLoader(__DIR__ . '/../config.json');
-    $websites = $configLoader->getSection('websites');
+    $configLoader = new Karatekes\ConfigLoader($pdo);
+    $websites = $configLoader->getWebsites();
 } catch (Exception $e) {
     $logger->log($e->getMessage(), 'error');
     exit("Fehler beim Laden der Konfiguration: " . $e->getMessage());
@@ -32,8 +35,13 @@ try {
 
 function handleUpdateCheck($website, $logger, $configLoader)
 {
+    // API-Daten aus der Datenbank abrufen
+    $apiAccount = $configLoader->getApiAccount($website['id']);
+    $user_api = isset($apiAccount['user']) ? $apiAccount['user'] : '';
+    $pass_api = isset($apiAccount['pass']) ? $apiAccount['pass'] : '';
+
     // Erstellt eine Instanz von UpdatesMonitor mit den erforderlichen Parametern.
-    $monitor = new UpdatesMonitor($website['url'], $website['api'][0]['user'], $website['api'][0]['pass']);
+    $monitor = new UpdatesMonitor($website['url'], $user_api, $pass_api);
 
     // Ruft Updates von der Monitor-Instanz ab.
     $updates = $monitor->getUpdates();
@@ -131,7 +139,8 @@ if (!$cli && isset($_GET['type']) && $_GET['type'] == 'wordpress') {
         $monitor = new UpdatesMonitor($website['url'], $website['api'][0]['user'], $website['api'][0]['pass']);
         $updates = $monitor->getUpdates();
         $hash = md5($website['url']);
-        $configLoader->updateConfigByHash($hash, 'updates', 0);  // Setzt den Zähler zurück
+        $stmt = $pdo->prepare('UPDATE websites SET updates = :updates WHERE id = :id');
+        $stmt->execute(['updates' => 0, 'id' => $website['id']]);  // Setzt den Zähler zurück
 
         if (isset($updates['error'])) {
             $logger->log("Fehler bei {$website['url']}: {$updates['error']}", 'error');
@@ -140,7 +149,7 @@ if (!$cli && isset($_GET['type']) && $_GET['type'] == 'wordpress') {
 
         // Prüfe auf verfügbare Updates bei Plugins
         if (!empty($updates['plugins'])) {
-            $updatesCount = 0;  // Korrigiert: Holt den aktuellen Zählerwert
+            $updatesCount = (int) $website['updates'];  // Holt den aktuellen Zählerwert aus der Datenbank
             foreach ($updates['plugins'] as $plugin) {
                 if (is_array($plugin) && isset($plugin['name']) && is_string($plugin['name'])) {
                     $pluginName = htmlspecialchars($plugin['name']);
@@ -151,10 +160,8 @@ if (!$cli && isset($_GET['type']) && $_GET['type'] == 'wordpress') {
 
                     if ($pluginStatus === 'Update verfügbar') {
                         $updatesCount++;  // Inkrementiert den Zähler
-                        $updated = $configLoader->updateConfigByHash($hash, 'updates', $updatesCount);  // Aktualisiert den Zählerwert
-                        if ($updated) {
-                            $logger->log("Update-Status für die Website '{$website['url']}' wurde auf {$updatesCount} gesetzt.", 'info');
-                        }
+                        $stmt = $pdo->prepare('UPDATE websites SET updates = :updates WHERE id = :id');
+                        $stmt->execute(['updates' => $updatesCount, 'id' => $website['id']]);  // Aktualisiert den Zählerwert in der Datenbank
                     }
                 }
             }

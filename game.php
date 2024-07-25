@@ -4,8 +4,10 @@ $title = "Einfaches 2D-Spiel - Webdesign Karateke";
 $meta_description = "Game - Willkommen bei Webdesign Karateke";
 $additional_head_content_1 = '<link rel="stylesheet" href="game.css">';
 
-$configLoader = new Karatekes\ConfigLoader('config.json');
-$websites = $configLoader->getSection('websites');
+// Verbindung zur Datenbank herstellen
+$pdo = new PDO('mysql:host=localhost;dbname=db_main', 'root', '');
+$configLoader = new Karatekes\ConfigLoader($pdo);
+$websites = $configLoader->getWebsites();
 
 if (!isset($_SESSION['score'])) {
     $_SESSION['score'] = 0;

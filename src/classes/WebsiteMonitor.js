@@ -2,6 +2,8 @@
 class WebsiteMonitor {
     constructor(websites) {
         this.websites = websites;
+        // JavaScript: Definition des Caches für Serverinformationen
+        this.serverInfoCache = {};
     }
 
     init() {
@@ -60,7 +62,7 @@ class WebsiteMonitor {
                 var port = button.getAttribute('data-port');
                 var user = button.getAttribute('data-user');
                 var pass = button.getAttribute('data-pass');
-                this.showServerInfo(url, host, port, user, pass);
+                self.showServerInfo(url, host, port, user, pass);
             });
         });
 
@@ -164,6 +166,15 @@ class WebsiteMonitor {
     showServerInfo(url, host, port, user, pass) {
         var modal = new bootstrap.Modal(document.getElementById('serverInfoModal'));
         var content = document.getElementById('server-info-content');
+        var spinner = document.getElementById('server-info-spinner');
+
+        // Überprüfen, ob Informationen bereits im Cache sind
+        if (this.serverInfoCache[url]) { // this.serverInfoCache anstatt serverInfoCache
+            content.innerHTML = this.serverInfoCache[url]; // this.serverInfoCache anstatt serverInfoCache
+            modal.show();
+            return;
+        }
+
         content.innerHTML = ''; // Inhalt löschen
         this.showSpinner('server-info-content'); // Spinner anzeigen
 
@@ -192,6 +203,10 @@ class WebsiteMonitor {
                     <p><strong>Zlib Enabled:</strong> ${result['Zlib Enabled']}</p>
                     <p><strong>Is Multisite:</strong> ${result['Is Multisite']}</p>
                 `;
+                content.innerHTML = infoHtml;
+
+                // Informationen im Cache speichern
+                this.serverInfoCache[url] = infoHtml; // this.serverInfoCache anstatt serverInfoCache
             } catch (e) {
                 content.innerHTML = '<p>Error retrieving data.</p>';
             }

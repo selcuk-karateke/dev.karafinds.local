@@ -1,6 +1,7 @@
 <?php
 // phpinfo();
 require_once 'bootstrap.php';
+
 $title = "DEV";
 $meta_description = "DEV Dashboard - Webdesign Karateke";
 $nofollow = true ? 'rel="nofollow"' : '';
@@ -9,8 +10,10 @@ $additional_head_content_1 = '';
 $additional_head_content_2 = '<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>';
 include 'parts/head.php';
 
-$configLoader = new Karatekes\ConfigLoader('config.json');
-$websites = $configLoader->getSection('websites');
+// Verbindung zur Datenbank herstellen
+$pdo = new PDO('mysql:host=localhost;dbname=db_main', 'root', '');
+$configLoader = new Karatekes\ConfigLoader($pdo);
+$websites = $configLoader->getWebsites();
 
 // $logger->log("Dies ist eine Info-Nachricht", 'info');
 // $logger->log("Dies ist eine Warnung", 'warning', true);
@@ -35,12 +38,13 @@ if ($userLogged) {
                             <?php foreach ($websites as $website) : ?>
                                 <?php
                                 $uniqueId = md5($website['url']); // Eindeutige ID für jedes Website-Element
-                                $filename = 'C:\xampp\htdocs\dev.karafinds.local\check\updates-' . $uniqueId . '.json';
-                                $updateData = file_exists($filename) ? json_decode(file_get_contents($filename), true) : null;
-                                $hasUpdates = isset($website['updates']) && $website['updates'] > 0;
                                 $parsedUrl = parse_url($website['url'], PHP_URL_HOST);
                                 $host = $parsedUrl ? $parsedUrl : $website['url'];
                                 $ipAddress = filter_var($host, FILTER_VALIDATE_IP) ? $host : gethostbyname($host);
+
+                                $apiAccount = $configLoader->getApiAccount($website['id']);
+                                $user_api = isset($apiAccount['user']) ? $apiAccount['user'] : '';
+                                $pass_api = isset($apiAccount['pass']) ? $apiAccount['pass'] : '';
                                 ?>
                                 <div class="col-md-6 sortable-card">
                                     <div class="card mb-4">
@@ -48,7 +52,7 @@ if ($userLogged) {
                                             <a href="<?php echo htmlspecialchars($website['url']); ?>" <?php echo $nofollow; ?> target="_blank">
                                                 <i class="fas fa-globe"></i> <?php echo htmlspecialchars($website['name']); ?>
                                             </a>
-                                            <?php if ($hasUpdates) : ?>
+                                            <?php if ($website['updates'] > 0) : ?>
                                                 <span class="badge bg-danger">!</span>
                                             <?php endif; ?>
                                             <span class="float-end" id="availability-status-header-<?php echo $uniqueId; ?>"> </span>
@@ -60,6 +64,12 @@ if ($userLogged) {
                                         <div id="cardContent-<?php echo $uniqueId; ?>" class="collapse">
                                             <div class="card-body">
                                                 <p><?php echo $host; ?> (<?php echo $ipAddress; ?>)</p>
+                                                <!-- Spinner für Ladeanzeige außerhalb des Modal-Inhalts -->
+                                                <div id="server-info-spinner" style="display: none;">
+                                                    <div class="spinner-grow spinner-grow-sm text-primary" role="status">
+                                                        <span class="visually-hidden">Lade Daten...</span>
+                                                    </div>
+                                                </div>
                                                 <ul class="nav nav-tabs" id="myTab-<?php echo $uniqueId; ?>" role="tablist">
                                                     <li class="nav-item" role="presentation">
                                                         <button class="nav-link active" id="server-info-tab-<?php echo $uniqueId; ?>" data-bs-toggle="tab" data-bs-target="#server-info-<?php echo $uniqueId; ?>" type="button" role="tab" aria-controls="server-info-<?php echo $uniqueId; ?>" aria-selected="true"><i class="fas fa-info-circle"></i></button>
@@ -75,7 +85,7 @@ if ($userLogged) {
                                                     </li>
                                                     <li class="nav-item" role="presentation">
                                                         <button class="nav-link" id="updates-tab-<?php echo $uniqueId; ?>" data-bs-toggle="tab" data-bs-target="#updates-<?php echo $uniqueId; ?>" type="button" role="tab" aria-controls="updates-<?php echo $uniqueId; ?>" aria-selected="false"><i class="fas fa-sync-alt"></i>
-                                                            <?php if ($hasUpdates) : ?>
+                                                            <?php if ($website['updates'] > 0) : ?>
                                                                 <span class="badge bg-danger"><?php echo $website['updates']; ?></span>
                                                             <?php endif; ?>
                                                         </button>
@@ -121,7 +131,7 @@ if ($userLogged) {
                                                         </button>
                                                     </div>
                                                     <div class="tab-pane fade" id="updates-<?php echo $uniqueId; ?>" role="tabpanel" aria-labelledby="updates-tab-<?php echo $uniqueId; ?>">
-                                                        <button class="btn btn-primary mt-3 check-updates-btn" data-url="<?php echo $website['url']; ?>" data-urlHash="<?php echo $uniqueId; ?>" data-user_api="<?php echo $website['api'][0]['user']; ?>" data-pass_api="<?php echo $website['api'][0]['pass']; ?>" data-type="<?php echo $website['type']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Updates prüfen">
+                                                        <button class="btn btn-primary mt-3 check-updates-btn" data-url="<?php echo $website['url']; ?>" data-urlHash="<?php echo $uniqueId; ?>" data-user_api="<?php echo $user_api; ?>" data-pass_api="<?php echo $pass_api; ?>" data-type="<?php echo $website['type']; ?>" data-bs-toggle="tooltip" data-bs-placement="top" title="Updates prüfen">
                                                             <i class="fas fa-sync-alt"></i> Updates prüfen
                                                         </button>
                                                         <div id="updates-status-<?php echo $uniqueId; ?>" class="status-indicator mt-2"></div>
