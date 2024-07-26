@@ -9,6 +9,12 @@ $pdo = new PDO('mysql:host=localhost;dbname=db_main', 'root', '');
 $configLoader = new Karatekes\ConfigLoader($pdo);
 $websites = $configLoader->getWebsites();
 
+$dbAccount = $configLoader->getDbAccounts($websites[1]['id']);
+$name_db = isset($dbAccount[1]['name']) ? $dbAccount[1]['name'] : '';
+$host_db = isset($dbAccount[1]['host']) ? $dbAccount[1]['host'] : '';
+$user_db = isset($dbAccount[1]['user']) ? $dbAccount[1]['user'] : '';
+$pass_db = isset($dbAccount[1]['pass']) ? $dbAccount[1]['pass'] : '';
+
 if (!isset($_SESSION['score'])) {
     $_SESSION['score'] = 0;
 }
@@ -18,8 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['score'] = $_POST['score'];
     }
 }
-
-$mysqli = new mysqli('localhost', 'root', '', $websites[1]['db'][1]['name']);
+$mysqli = new mysqli($host_db, $user_db, $pass_db, $name_db);
 
 if ($mysqli->connect_error) {
     die('Connection Error: ' . $mysqli->connect_error);

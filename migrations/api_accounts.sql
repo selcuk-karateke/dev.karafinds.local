@@ -1,4 +1,4 @@
-CREATE TABLE ftp_accounts (
+CREATE TABLE api_accounts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     website_id INT,
     user VARCHAR(255) NOT NULL,

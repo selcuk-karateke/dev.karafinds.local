@@ -17,11 +17,17 @@ class ConfigLoader
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function getDatabases($website_id)
+    public function getDbAccounts($website_id)
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM databases WHERE website_id = :website_id');
+        $stmt = $this->pdo->prepare('SELECT * FROM db_accounts WHERE website_id = :website_id');
         $stmt->execute(['website_id' => $website_id]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    public function getDbAccount($website_id)
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM db_accounts WHERE website_id = :website_id LIMIT 1');
+        $stmt->execute(['website_id' => $website_id]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function getFtpAccounts($website_id)

@@ -32,7 +32,8 @@
             ],
             "updates": 0,
             "type": "wordpress",
-            "spam_api": "d9dde23d1c26"
+            "spam_api": "d9dde23d1c26",
+            "prop_id": ""
         },
         {
             "name": "DEV",
@@ -66,7 +67,8 @@
             ],
             "updates": 0,
             "type": "self",
-            "spam_api": ""
+            "spam_api": "",
+            "prop_id": ""
         }
     ]
 }
