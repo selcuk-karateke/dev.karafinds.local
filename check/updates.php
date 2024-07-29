@@ -64,14 +64,34 @@ function processPlugins($plugins, $website, $configLoader, $logger)
 {
     foreach ($plugins as $plugin) {
         // Verarbeitet jedes Plugin entsprechend
-        $logger->log("Verarbeite Plugin {$plugin['name']} für {$website['url']}", 'info');
-        // Hier kann zusätzliche Logik zur Plugin-Verarbeitung eingefügt werden
+        if (is_array($plugin) && isset($plugin['name'])) {
+            $logger->log("Verarbeite Plugin {$plugin['name']} für {$website['url']}", 'info');
+        } else {
+            $logger->log("Plugin-Datenformat unbekannt für {$website['url']}: " . print_r($plugin, true), 'error');
+        }
     }
 }
 
-foreach ($websites as $website) {
-    if (!handleUpdateCheck($website, $logger, $configLoader)) {
-        continue;  // Fortsetzung mit der nächsten Website im Fehlerfall
+// Prüfen ob der Aufruf vom Button (single) oder vom Cron-Job (cron) kommt
+$mode = isset($params['mode']) ? $params['mode'] : 'cron';
+if ($mode === 'single') {
+    // Einzelne Website-Updates vom Button
+    $url = isset($params['url']) ? $params['url'] : null;
+    $website = array_filter($websites, function ($site) use ($url) {
+        return $site['url'] === $url;
+    });
+    if (!empty($website)) {
+        $website = reset($website); // Erstes Element aus dem gefilterten Array
+        handleUpdateCheck($website, $logger, $configLoader);
+    } else {
+        echo json_encode(['error' => 'Website nicht gefunden.']);
+    }
+} else {
+    // Alle Websites im Cron-Job
+    foreach ($websites as $website) {
+        if (!handleUpdateCheck($website, $logger, $configLoader)) {
+            continue;  // Fortsetzung mit der nächsten Website im Fehlerfall
+        }
     }
 }
 
@@ -136,7 +156,12 @@ if (!$cli && isset($_GET['type']) && $_GET['type'] == 'wordpress') {
 } elseif ($cli) {
     // CLI-Modus: Verarbeitet die Konfiguration und aktualisiert config.json
     foreach ($websites as $website) {
-        $monitor = new UpdatesMonitor($website['url'], $website['api'][0]['user'], $website['api'][0]['pass']);
+        $apiAccount = $configLoader->getApiAccount($website['id']);
+        $user_api = isset($apiAccount['user']) ? $apiAccount['user'] : '';
+        $pass_api = isset($apiAccount['pass']) ? $apiAccount['pass'] : '';
+
+        // Erstellt eine Instanz von UpdatesMonitor mit den erforderlichen Parametern.
+        $monitor = new UpdatesMonitor($website['url'], $user_api, $pass_api);
         $updates = $monitor->getUpdates();
         $hash = md5($website['url']);
         $stmt = $pdo->prepare('UPDATE websites SET updates = :updates WHERE id = :id');

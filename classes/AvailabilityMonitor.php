@@ -28,7 +28,7 @@ class AvailabilityMonitor
 
         // Fehlerprüfung
         if ($response === false) {
-            return "cURL-Fehler: " . curl_error($ch);
+            return "cURL: " . curl_error($ch);
         } else {
             // HTTP-Statuscode extrahieren
             $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -38,9 +38,9 @@ class AvailabilityMonitor
                 case 200:
                     return "UP";
                 case 403:
-                    return "DOWN (Statuscode: 403 - Forbidden)";
+                    return "DOWN (403)";
                 default:
-                    return "DOWN ist nicht erreichbar (Statuscode: $statusCode)";
+                    return "DOWN ($statusCode)";
             }
         }
     }

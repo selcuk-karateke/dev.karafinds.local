@@ -23,7 +23,7 @@ class WebsiteMonitor {
 
     setupTooltips() {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
     }
@@ -53,105 +53,29 @@ class WebsiteMonitor {
     }
 
     setupEventHandlers() {
-        var self = this;
+        const events = [
+            { selector: '.server-info-btn', handler: this.showServerInfo, attributes: ['data-url', 'data-host', 'data-port', 'data-user', 'data-pass'] },
+            { selector: '.check-loadtime-btn', handler: this.checkLoadTime, attributes: ['data-url', 'data-urlHash'] },
+            { selector: '.check-availability-btn', handler: this.checkAvailability, attributes: ['data-url', 'data-urlHash'] },
+            { selector: '.check-updates-btn', handler: this.checkUpdates, attributes: ['data-url', 'data-urlHash', 'data-user_api', 'data-pass_api', 'data-type'] },
+            { selector: '.check-google-traffic-btn', handler: this.checkGoogleTraffic, attributes: ['data-url', 'data-urlHash', 'data-propertyId'] },
+            { selector: '.check-comments-btn', handler: this.checkComments, attributes: ['data-url', 'data-urlHash', 'data-spamApi'] },
+            { selector: '.check-seo-btn', handler: this.checkSEO, attributes: ['data-url', 'data-urlHash'] },
+            { selector: '.check-security-btn', handler: this.checkSecurity, attributes: ['data-url', 'data-urlHash', 'data-host', 'data-port', 'data-user', 'data-pass', 'data-path'] },
+            { selector: '.check-server-load-btn', handler: this.checkServerLoad, attributes: ['data-url', 'data-urlHash', 'data-host', 'data-port', 'data-user', 'data-pass'] },
+            { selector: '.check-log-traffic-btn', handler: this.checkLogTraffic, attributes: ['data-url', 'data-urlHash'] }
+        ];
 
-        document.querySelectorAll('.server-info-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                var url = button.getAttribute('data-url');
-                var host = button.getAttribute('data-host');
-                var port = button.getAttribute('data-port');
-                var user = button.getAttribute('data-user');
-                var pass = button.getAttribute('data-pass');
-                self.showServerInfo(url, host, port, user, pass);
-            });
-        });
-
-        document.querySelectorAll('.check-loadtime-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                var url = button.getAttribute('data-url');
-                var urlHash = button.getAttribute('data-urlHash');
-                self.checkLoadTime(url, urlHash);
-            });
-        });
-
-        document.querySelectorAll('.check-availability-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                var url = button.getAttribute('data-url');
-                var urlHash = button.getAttribute('data-urlHash');
-                self.checkAvailability(url, urlHash);
-            });
-        });
-
-        document.querySelectorAll('.check-updates-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                var url = button.getAttribute('data-url');
-                var urlHash = button.getAttribute('data-urlHash');
-                var user_api = button.getAttribute('data-user_api');
-                var pass_api = button.getAttribute('data-pass_api');
-                var type = button.getAttribute('data-type');
-                self.checkUpdates(url, urlHash, user_api, pass_api, type);
-            });
-        });
-
-        document.querySelectorAll('.check-google-traffic-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                var url = button.getAttribute('data-url');
-                var urlHash = button.getAttribute('data-urlHash');
-                var propertyId = button.getAttribute('data-propertyId');
-                self.checkGoogleTraffic(url, urlHash, propertyId);
-            });
-        });
-
-        document.querySelectorAll('.check-comments-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                var url = button.getAttribute('data-url');
-                var urlHash = button.getAttribute('data-urlHash');
-                var spamApi = button.getAttribute('data-spamApi');
-                self.checkComments(url, urlHash, spamApi);
-            });
-        });
-
-        document.querySelectorAll('.check-seo-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                var url = button.getAttribute('data-url');
-                var urlHash = button.getAttribute('data-urlHash');
-                self.checkSEO(url, urlHash);
-            });
-        });
-
-        document.querySelectorAll('.check-security-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                var url = button.getAttribute('data-url');
-                var urlHash = button.getAttribute('data-urlHash');
-                var host = button.getAttribute('data-host');
-                var port = button.getAttribute('data-port');
-                var user = button.getAttribute('data-user');
-                var pass = button.getAttribute('data-pass');
-                var path = button.getAttribute('data-path');
-                self.checkSecurity(url, host, port, user, pass, path, urlHash);
-            });
-        });
-
-        document.querySelectorAll('.check-server-load-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                var url = button.getAttribute('data-url');
-                var urlHash = button.getAttribute('data-urlHash');
-                var host = button.getAttribute('data-host');
-                var port = button.getAttribute('data-port');
-                var user = button.getAttribute('data-user');
-                var pass = button.getAttribute('data-pass');
-                self.checkServerLoad(url, urlHash, host, port, user, pass);
-            });
-        });
-
-        document.querySelectorAll('.check-log-traffic-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                var url = button.getAttribute('data-url');
-                var urlHash = button.getAttribute('data-urlHash');
-                self.checkLogTraffic(url, urlHash);
+        events.forEach(event => {
+            document.querySelectorAll(event.selector).forEach(button => {
+                button.addEventListener('click', () => {
+                    const args = event.attributes.map(attr => button.getAttribute(attr));
+                    event.handler.apply(this, args);
+                });
             });
         });
     }
+
 
     showSpinner(elementId) {
         var element = document.getElementById(elementId);
@@ -218,6 +142,7 @@ class WebsiteMonitor {
         var statusListId = 'updates-status-' + urlHash;
         this.showSpinner(statusListId);
         $.get('check/updates.php', {
+            mode: 'single',
             url: url,
             user_api: user_api,
             pass_api: pass_api,
@@ -245,7 +170,7 @@ class WebsiteMonitor {
                 var result = typeof response === 'string' ? JSON.parse(response) : response;
                 if (result.data && result.data.length > 0) {
                     var output = '<table class="table"><thead><tr><th>Source/Medium</th><th>Campaign</th><th>Sessions</th></tr></thead><tbody>';
-                    result.data.forEach(function (row) {
+                    result.data.forEach(function(row) {
                         output += '<tr><td>' + row['dimension0'] + '</td><td>' + row['dimension1'] + '</td><td>' + row['metric0'] + '</td></tr>';
                     });
                     output += '</tbody></table>';
@@ -272,7 +197,7 @@ class WebsiteMonitor {
                 var result = typeof response === 'string' ? JSON.parse(response) : response;
                 var statusHeader = $('#' + statusHeaderId);
                 statusHeader.empty();
-                $.each(result, function (url, status) {
+                $.each(result, function(url, status) {
                     var icon;
                     if (status.includes("UP")) {
                         icon = '<i class="fas fa-check-circle text-success"></i>';
@@ -300,7 +225,7 @@ class WebsiteMonitor {
                 this.hideSpinner(statusHeaderId);
                 var statusHeader = $('#' + statusHeaderId);
                 statusHeader.empty();
-                $.each(result, function (url, time) {
+                $.each(result, function(url, time) {
                     var icon;
                     if (time < 2) {
                         icon = '<i class="fas fa-check-circle text-success"></i>'; // Grün für gute Ladezeit
@@ -328,7 +253,7 @@ class WebsiteMonitor {
                 this.hideSpinner(statusListId);
                 var statusList = $('#' + statusListId);
                 statusList.empty();
-                $.each(result, function (index, comment) {
+                $.each(result, function(index, comment) {
                     var commentData = {
                         permalink: comment.link,
                         comment_type: 'comment',
@@ -341,7 +266,7 @@ class WebsiteMonitor {
                         spam_api: spamApi,
                         blog_url: url,
                         comment: commentData
-                    }, function (data) {
+                    }, function(data) {
                         var icon;
                         if (data == 'true') {
                             icon = '<i class="fas fa-times-circle text-danger"></i> Spam';
