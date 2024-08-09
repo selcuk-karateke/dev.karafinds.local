@@ -12,9 +12,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="instagram.php" tabindex="-1" aria-disabled="false" title="Instagram">Instagram</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="game.php" tabindex="-1" aria-disabled="false" title="Game">Game</a>
-                </li>
                 <?php if ($userLogged) : ?>
                     <li class="nav-item">
                         <a class="nav-link" href="dev.php" tabindex="-1" aria-disabled="false" title="DEV" rel="nofollow">DEV</a>

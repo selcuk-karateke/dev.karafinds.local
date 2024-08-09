@@ -2,7 +2,7 @@
 require_once 'bootstrap.php';
 $title = "Textify - Webdesign Karateke";
 $meta_description = "Textify - Willkommen bei Webdesign Karateke";
-// $additional_head_content_1 = '<link rel="stylesheet" href="game.css">';
+// $additional_head_content_1 = '<link rel="stylesheet" href="extra.css">';
 $message = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

@@ -25,7 +25,6 @@ nav ul li a {
 
 section h2 {}
 
-
 .stroked-text {
     -webkit-text-stroke: 3px #212529;
     -webkit-text-fill-color: white;
@@ -40,7 +39,9 @@ footer {
     bottom: 0;
 }
 
+
 /* Button styles */
+
 .btn {
     min-width: 50px;
     padding: 8px 16px;
@@ -66,19 +67,4 @@ footer {
     text-align: center;
     font-size: 1.2rem;
     font-weight: bold;
-}
-
-.game-area {
-    margin: auto;
-    /* Zentriert das Canvas im sichtbaren Bereich */
-}
-
-.controls {
-    text-align: center;
-    /* Zentriert die Steuerungselemente unter dem Canvas */
-}
-
-.extra-info {
-    margin-top: 20px;
-    /* Gibt etwas Abstand zwischen Spielbereich und zusätzlichen Infos */
 }

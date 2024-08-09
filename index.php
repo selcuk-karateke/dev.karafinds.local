@@ -8,10 +8,13 @@ $nofollow = false ? 'rel="nofollow"' : '';
 $additional_head_content_1 = '';
 $additional_head_content_2 = '<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>';
 include 'parts/head.php';
-
-if ($userLogged) {
 ?>
-    <body>
+
+<body>
+    <?php
+    if ($userLogged) {
+    ?>
+
         <div class="container">
             <header class="my-4">
                 <h1 class="text-center">Home - Webdesign Karateke</h1>
@@ -25,20 +28,19 @@ if ($userLogged) {
                 </div>
             </section>
         </div>
-        <footer class="text-center mt-4">
-            &copy; 2023 Webdesign Karateke - Alle Rechte vorbehalten.
-        </footer>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
 
-    </html>
-<?php
-} else {
-    include('auth/login.php'); // Anmeldeseite
-}
-?>
+    <?php
+    } else {
+        include('auth/login.php'); // Anmeldeseite
+    }
+    ?>
+
+    <footer class="text-center mt-4">
+        &copy; 2023 Webdesign Karateke - Alle Rechte vorbehalten.
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
