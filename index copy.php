@@ -84,7 +84,7 @@ if ($userLogged) {
 
         <script>
             $(document).ready(function() {
-                $.get('check/availability.php', function(data) {
+                $.get('/check/availability.php', function(data) {
                     var results = JSON.parse(data);
                     var statusList = $('#availability-status');
                     statusList.empty();

@@ -8,7 +8,7 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <title><?php echo $title; ?></title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 

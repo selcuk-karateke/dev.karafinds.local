@@ -1,6 +1,6 @@
 <?php
 // phpinfo();
-require_once 'bootstrap.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 
 $title = "DEV";
 $meta_description = "DEV Dashboard - Webdesign Karateke";
@@ -8,7 +8,7 @@ $nofollow = true ? 'rel="nofollow"' : '';
 // $additional_head_content = '<link rel="stylesheet" href="index.css">';
 $additional_head_content_1 = '';
 $additional_head_content_2 = '<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>';
-include 'parts/head.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/parts/head.php';
 
 // Verbindung zur Datenbank herstellen
 $pdo = new PDO('mysql:host=localhost;dbname=db_main', 'root', '');
@@ -26,7 +26,7 @@ if ($userLogged) {
         <div class="container">
             <header class="my-4">
                 <h1 class="text-center">DEV Dashboard - Webdesign Karateke</h1>
-                <?php include 'parts/nav.php'; ?>
+                <?php include $_SERVER['DOCUMENT_ROOT'] . '/parts/nav.php'; ?>
             </header>
             <section>
                 <div class="row">
@@ -49,15 +49,15 @@ if ($userLogged) {
                                 <div class="col-md-6 sortable-card">
                                     <div class="card mb-4">
                                         <div class="card-header d-flex justify-content-between align-items-center">
-                                            <a href="<?php echo htmlspecialchars($website['url']); ?>" <?php echo $nofollow; ?> target="_blank">
+                                            <a href="<?php echo htmlspecialchars($website['url']); ?>" <?php echo $nofollow; ?> target="_blank" class="flex-grow-1">
                                                 <i class="fas fa-globe"></i> <?php echo htmlspecialchars($website['name']); ?>
                                             </a>
                                             <?php if ($website['updates'] > 0) : ?>
                                                 <span class="badge bg-danger">!</span>
                                             <?php endif; ?>
-                                            <span class="float-end" id="availability-status-header-<?php echo $uniqueId; ?>"> </span>
-                                            <span class="float-end" id="loadtime-status-header-<?php echo $uniqueId; ?>"></span>
-                                            <button class="btn toggle-btn" type="button" data-bs-toggle="collapse" data-bs-target="#cardContent-<?php echo $uniqueId; ?>" aria-expanded="false" aria-controls="cardContent-<?php echo $uniqueId; ?>">
+                                            <span class="float-end limited-width" id="availability-status-header-<?php echo $uniqueId; ?>"></span>
+                                            <span class="float-end limited-width" id="loadtime-status-header-<?php echo $uniqueId; ?>"></span>
+                                            <button class="btn toggle-btn limited-width" type="button" data-bs-toggle="collapse" data-bs-target="#cardContent-<?php echo $uniqueId; ?>" aria-expanded="false" aria-controls="cardContent-<?php echo $uniqueId; ?>">
                                                 <i class="fas fa-chevron-up"></i>
                                             </button>
                                         </div>
@@ -202,7 +202,7 @@ if ($userLogged) {
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="src/classes/WebsiteMonitor.js"></script> <!-- Pfad zur JS-Datei -->
+        <script src="/src/classes/WebsiteMonitor.js"></script> <!-- Pfad zur JS-Datei -->
         <script>
             $(document).ready(function() {
                 var websites = <?php echo json_encode($websites); ?>;

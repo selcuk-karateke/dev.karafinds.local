@@ -1,5 +1,5 @@
 <?php
-require_once 'bootstrap.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 $scope = 'instagram_basic,instagram_manage_comments';
 $oauthUrl = 'https://api.instagram.com/oauth/';
 // URL für die Benutzerauthentifizierung bauen
@@ -30,14 +30,14 @@ if (isset($_GET['code'])) {
 $title = "Dev Instagram - Webdesign Karateke";
 $meta_description = "Instagram - Willkommen bei Webdesign Karateke";
 // $additional_head_content_1 = '<link rel="stylesheet" href="instagram.css">';
-include 'parts/head.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/parts/head.php';
 ?>
 
 <body>
     <div class="container">
         <header class="my-4">
             <h1 class="text-center">Instagram - Webdesign Karateke</h1>
-            <?php include 'parts/nav.php'; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . '/parts/nav.php'; ?>
         </header>
         <section>
             <div class="row">

@@ -1,5 +1,5 @@
 <?php
-require_once 'bootstrap.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 $title = "Textify - Webdesign Karateke";
 $meta_description = "Textify - Willkommen bei Webdesign Karateke";
 // $additional_head_content_1 = '<link rel="stylesheet" href="extra.css">';
@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['backup'])) {
         // Pfad zum Quell- und Zielverzeichnis
         $sourceDirectory = __DIR__;
-        $targetDirectory = __DIR__ . '/backup';
+        $targetDirectory = $_SERVER['DOCUMENT_ROOT'] . '/backup';
         $fileStructure = [];
 
         // Funktion ausführen
@@ -19,8 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = "Backup wurde erfolgreich erstellt!";
     }
 }
-
-include 'parts/head.php';
 
 function saveDirectoryAsText($sourceDir, $targetDir, &$fileStructure, $currentPath = '')
 {
@@ -69,6 +67,7 @@ function saveDirectoryAsText($sourceDir, $targetDir, &$fileStructure, $currentPa
         $subPath[$lastPart] = 'file';
     }
 }
+include $_SERVER['DOCUMENT_ROOT'] . '/parts/head.php';
 
 ?>
 
@@ -76,7 +75,7 @@ function saveDirectoryAsText($sourceDir, $targetDir, &$fileStructure, $currentPa
     <div class="container">
         <header class="my-4">
             <h1 class="text-center"><?= $title ?></h1>
-            <?php include 'parts/nav.php'; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . '/parts/nav.php'; ?>
         </header>
         <section>
             <div class="row">

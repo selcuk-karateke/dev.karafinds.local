@@ -23,7 +23,7 @@ class WebsiteMonitor {
 
     setupTooltips() {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
     }
@@ -141,7 +141,7 @@ class WebsiteMonitor {
     checkUpdates(url, urlHash, user_api, pass_api, type) {
         var statusListId = 'updates-status-' + urlHash;
         this.showSpinner(statusListId);
-        $.get('check/updates.php', {
+        $.get('/check/updates.php', {
             mode: 'single',
             url: url,
             user_api: user_api,
@@ -161,7 +161,7 @@ class WebsiteMonitor {
     checkGoogleTraffic(url, urlHash, propertyId) {
         var statusListId = 'google-traffic-status-' + urlHash;
         this.showSpinner(statusListId);
-        $.get('check/googleTraffic.php', {
+        $.get('/check/googleTraffic.php', {
             url: url,
             propertyId: propertyId
         }, (response) => {
@@ -170,7 +170,7 @@ class WebsiteMonitor {
                 var result = typeof response === 'string' ? JSON.parse(response) : response;
                 if (result.data && result.data.length > 0) {
                     var output = '<table class="table"><thead><tr><th>Source/Medium</th><th>Campaign</th><th>Sessions</th></tr></thead><tbody>';
-                    result.data.forEach(function(row) {
+                    result.data.forEach(function (row) {
                         output += '<tr><td>' + row['dimension0'] + '</td><td>' + row['dimension1'] + '</td><td>' + row['metric0'] + '</td></tr>';
                     });
                     output += '</tbody></table>';
@@ -189,7 +189,7 @@ class WebsiteMonitor {
     checkAvailability(url, urlHash) {
         var statusHeaderId = 'availability-status-header-' + urlHash;
         this.showSpinner(statusHeaderId);
-        $.get('check/availability.php', {
+        $.get('/check/availability.php', {
             url: url
         }, (response) => {
             this.hideSpinner(statusHeaderId);
@@ -197,7 +197,7 @@ class WebsiteMonitor {
                 var result = typeof response === 'string' ? JSON.parse(response) : response;
                 var statusHeader = $('#' + statusHeaderId);
                 statusHeader.empty();
-                $.each(result, function(url, status) {
+                $.each(result, function (url, status) {
                     var icon;
                     if (status.includes("UP")) {
                         icon = '<i class="fas fa-check-circle text-success"></i>';
@@ -217,7 +217,7 @@ class WebsiteMonitor {
     checkLoadTime(url, urlHash) {
         var statusHeaderId = 'loadtime-status-header-' + urlHash;
         this.showSpinner(statusHeaderId);
-        $.get('check/loadtime.php', {
+        $.get('/check/loadtime.php', {
             url: url
         }, (response) => {
             try {
@@ -225,7 +225,7 @@ class WebsiteMonitor {
                 this.hideSpinner(statusHeaderId);
                 var statusHeader = $('#' + statusHeaderId);
                 statusHeader.empty();
-                $.each(result, function(url, time) {
+                $.each(result, function (url, time) {
                     var icon;
                     if (time < 2) {
                         icon = '<i class="fas fa-check-circle text-success"></i>'; // Grün für gute Ladezeit
@@ -253,7 +253,7 @@ class WebsiteMonitor {
                 this.hideSpinner(statusListId);
                 var statusList = $('#' + statusListId);
                 statusList.empty();
-                $.each(result, function(index, comment) {
+                $.each(result, function (index, comment) {
                     var commentData = {
                         permalink: comment.link,
                         comment_type: 'comment',
@@ -262,11 +262,11 @@ class WebsiteMonitor {
                         comment_author_url: comment.author_url,
                         comment_content: comment.content.rendered
                     };
-                    $.post('check/comment.php', {
+                    $.post('/check/comment.php', {
                         spam_api: spamApi,
                         blog_url: url,
                         comment: commentData
-                    }, function(data) {
+                    }, function (data) {
                         var icon;
                         if (data == 'true') {
                             icon = '<i class="fas fa-times-circle text-danger"></i> Spam';
@@ -285,7 +285,7 @@ class WebsiteMonitor {
     checkSEO(url, urlHash) {
         var statusListId = 'seo-status-' + urlHash;
         this.showSpinner(statusListId);
-        $.get('check/seo.php', {
+        $.get('/check/seo.php', {
             url: url
         }, (response) => {
             var result = typeof response === 'string' ? JSON.parse(response) : response;
@@ -302,7 +302,7 @@ class WebsiteMonitor {
     checkSecurity(url, host, port, user, pass, path, urlHash) {
         var statusListId = 'security-status-' + urlHash;
         this.showSpinner(statusListId);
-        $.get('check/security.php', {
+        $.get('/check/security.php', {
             url: url,
             host: host,
             port: port,
@@ -319,7 +319,7 @@ class WebsiteMonitor {
     checkServerLoad(url, urlHash, host, port, user, pass) {
         var statusListId = 'server-load-status-' + urlHash;
         this.showSpinner(statusListId);
-        $.get('check/serverLoad.php', {
+        $.get('/check/serverLoad.php', {
             url: url,
             host: host,
             port: port,
@@ -335,7 +335,7 @@ class WebsiteMonitor {
     checkLogTraffic(url, urlHash) {
         var statusListId = 'log-traffic-status-' + urlHash;
         this.showSpinner(statusListId);
-        $.get('check/logTraffic.php', {
+        $.get('/check/logTraffic.php', {
             url: url,
         }, (data) => {
             this.hideSpinner(statusListId);

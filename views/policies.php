@@ -1,16 +1,16 @@
 <?php
-require_once 'bootstrap.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/bootstrap.php';
 $title = "Datenschutzrichtlinie - Webdesign Karateke";
 $meta_description = "Policies - Willkommen bei Webdesign Karateke";
 // $additional_head_content_1 = '<link rel="stylesheet" href="policies.css">';
-include 'parts/head.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/parts/head.php';
 ?>
 
 <body>
     <div class="container">
         <header class="my-4">
             <h1 class="text-center">Datenschutzrichtlinie - Webdesign Karateke</h1>
-            <?php include 'parts/nav.php'; ?>
+            <?php include $_SERVER['DOCUMENT_ROOT'] . '/parts/nav.php'; ?>
         </header>
         <section>
             <div class="row">

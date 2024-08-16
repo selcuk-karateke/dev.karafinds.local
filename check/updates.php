@@ -174,7 +174,8 @@ if (!$cli && isset($_GET['type']) && $_GET['type'] == 'wordpress') {
 
         // Prüfe auf verfügbare Updates bei Plugins
         if (!empty($updates['plugins'])) {
-            $updatesCount = (int) $website['updates'];  // Holt den aktuellen Zählerwert aus der Datenbank
+            // $updatesCount = (int) $website['updates'];
+            $updatesCount = (int) $updates;  // Holt den aktuellen Zählerwert aus der Datenbank
             foreach ($updates['plugins'] as $plugin) {
                 if (is_array($plugin) && isset($plugin['name']) && is_string($plugin['name'])) {
                     $pluginName = htmlspecialchars($plugin['name']);

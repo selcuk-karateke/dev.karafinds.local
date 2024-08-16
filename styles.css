@@ -68,3 +68,21 @@ footer {
     font-size: 1.2rem;
     font-weight: bold;
 }
+
+.limited-width {
+    max-width: 150px;
+    /* Setzt die maximale Breite */
+    overflow: hidden;
+    /* Verhindert, dass der Inhalt überläuft */
+    text-overflow: ellipsis;
+    /* Fügt "..." hinzu, wenn der Text abgeschnitten wird */
+    white-space: nowrap;
+    /* Verhindert Zeilenumbrüche */
+}
+
+
+/* BS5 Custom */
+
+.card-header {
+    padding: .5rem 0rem .5rem 1rem !important;
+}
